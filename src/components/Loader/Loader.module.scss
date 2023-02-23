@@ -1,0 +1,36 @@
+@import "@styles/variables.scss";
+.loader {
+    position: relative;
+    box-sizing: border-box;
+    border-radius: 50%;
+    transform: rotate(-5.74deg);
+    @keyframes rotate {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+    & {
+        animation: rotate 1.5s linear 0s infinite;
+    }
+}
+.loader::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    right: -50%;
+    background-color: $default_backbround;
+    box-sizing: border-box;
+    transform: rotate(-5.74deg);
+}
+.disable_loader::after {
+    background-color: #d9d9d9;
+}
+.disable_loader {
+    border: white solid !important;
+}

@@ -1,0 +1,30 @@
+@import "@styles/variables.scss";
+
+header {
+    @include block_default_layout();
+    display: flex;
+    justify-content: right;
+    box-sizing: border-box;
+    padding: 30px 50px 20px 20px;
+}
+.food_block {
+    @include block_default_layout();
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.main_title {
+    @include block_default_layout();
+    @include page_title_font();
+    display: flex;
+    justify-content: center;
+    color: rgb(255, 0, 0, 0.7);
+}
+.loader_item {
+    height: 200px;
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
