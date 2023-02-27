@@ -6,10 +6,10 @@
     align-items: center;
     justify-content: space-between;
     padding: 8px 12px;
-    background: $default_backbround;
+    background: $default_background_color;
     width: 155px;
     height: 180px;
-    box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.12);
+    box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     box-sizing: border-box;
     margin: 40px 20px 0 20px;
@@ -39,14 +39,12 @@
 
 .card__content_block__title {
     @include block_main_font;
-    letter-spacing: -0.03em;
 }
 .card__content_block__subtitle {
     @include block_small-text_font;
     display: flex;
     align-items: center;
     height: 42px;
-    letter-spacing: -0.03em;
     color: #3b3b3b;
     opacity: 0.5;
 }

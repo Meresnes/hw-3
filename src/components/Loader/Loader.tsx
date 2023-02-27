@@ -5,7 +5,6 @@ import cn from "classnames";
 import styles from "./Loader.module.scss";
 
 export enum LoaderSize {
-  s = "s",
   m = "m",
   l = "l",
 }
@@ -38,17 +37,9 @@ const Loader: React.FC<LoaderProps> = ({
         border: "4.5px solid #ff0000",
       };
       break;
-    case "s":
-      loaderSize = {
-        width: "20px",
-        height: "20px",
-        border: "3px solid #ff0000",
-      };
-      break;
   }
+  // const loaderSize = `loader_${size}`;
   const classNames = cn(styles.loader, `${className}`);
-  return (
-    <>{loading && <div className={classNames} style={loaderSize}></div>}</>
-  );
+  return loading ? <div className={classNames} style={loaderSize}></div> : null;
 };
 export default Loader;

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import Loader from "@components/Loader";
+import { LoaderSize } from "@components/Loader/Loader";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 
@@ -8,21 +10,11 @@ import TimeIcon from "./images/TimeIcon.svg";
 import styles from "./ProductPage.module.scss";
 
 const apiKey = "22fca36cc74d47d6b3f5ac032690c948";
-// interface IResultTypes {
-//   id: number;
-//   data: any;
-//   cookingMinutes: number;
-//   image: string;
-//   instructions: string;
-//   title: string;
-// }
-// type DataTypes = {
-//   image: string;
-//   title: string;
-// };
+
 //https://api.spoonacular.com/recipes/715415/information?apiKey=0aa691061ee141258c142261650e5b08
 const ProductPage = () => {
   const [productData, setProductData] = useState<any>({});
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { id } = useParams();
   useEffect(() => {
     const fetch = async () => {
@@ -31,6 +23,7 @@ const ProductPage = () => {
         url: `https://api.spoonacular.com/recipes/${id}/information?includeNutrition=false&apiKey=${apiKey}`,
       });
       setProductData(result.data);
+      setIsLoading(false);
     };
     fetch();
   }, [id]);
@@ -38,7 +31,11 @@ const ProductPage = () => {
 
   return (
     <>
-      {Object.keys(productData).length > 0 && (
+      {isLoading ? (
+        <div className={styles.loader_block}>
+          <Loader size={LoaderSize.l} />
+        </div>
+      ) : (
         <div className={styles.product_block}>
           <div className={styles.product_block__image_block}>
             <img src={productData.image} alt={productData.title} />
