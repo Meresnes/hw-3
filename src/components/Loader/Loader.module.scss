@@ -3,7 +3,7 @@
     position: relative;
     box-sizing: border-box;
     border-radius: 50%;
-    transform: rotate(-5.74deg);
+    transform: rotate(-6deg);
     @keyframes rotate {
         0% {
             transform: rotate(0deg);
@@ -24,13 +24,13 @@
     height: 100%;
     top: 50%;
     right: -50%;
-    background-color: $default_backbround;
+    background-color: $default_background_color;
     box-sizing: border-box;
-    transform: rotate(-5.74deg);
+    transform: rotate(-6deg);
 }
 .disable_loader::after {
     background-color: #d9d9d9;
 }
 .disable_loader {
-    border: white solid !important;
+    border: 1px white solid;
 }
