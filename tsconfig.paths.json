@@ -13,6 +13,12 @@
       ],
       "@utils/*": [
         "src/utils/*"
+      ],
+      "@store/*": [
+        "src/store/*"
+      ],
+      "@models/*": [
+        "src/models/*"
       ]
     }
   }
