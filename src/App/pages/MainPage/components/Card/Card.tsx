@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 
 import { RecipesItemsModel } from "@models/Recipes/index";
 import { Link } from "react-router-dom";
@@ -10,7 +10,6 @@ export type CardProps = {
 
 const Card: React.FC<CardProps> = ({ data }) => {
   const ingredientsList = data.ingredients.map((item: any) => item.name);
-
   return (
     <div className={styles.card}>
       <Link to={`/product/${data.id}`}>
@@ -44,4 +43,4 @@ const Card: React.FC<CardProps> = ({ data }) => {
   );
 };
 
-export default Card;
+export default memo(Card);

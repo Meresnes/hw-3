@@ -35,17 +35,19 @@ export class RecipesStore implements ILocalStore {
   get meta(): Meta {
     return this._meta;
   }
+
   get totalRes(): number | null {
     return this._totalRes;
   }
   async getRecipesList() {
     this._meta = Meta.loading;
     this._list = [];
+
     const response: AxiosResponse = await axios({
       method: "GET",
       data: {},
       headers: {},
-      url: `${API_ENDPOINTS.GET_RECIPES}${API_ENDPOINTS.API_KEY}`,
+      url: `${API_ENDPOINTS.API_DOMAIN}${API_ENDPOINTS.API_GET_RECIPES}${API_ENDPOINTS.API_RECIPES_PARAMS}${API_ENDPOINTS.API_KEY}`,
     });
 
     runInAction(() => {
