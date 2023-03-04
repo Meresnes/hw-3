@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 import Loader from "@components/Loader";
 import { LoaderSize } from "@components/Loader/Loader";
-import { ProductStore } from "@store/ProductsStore";
+import { ProductStore } from "@store/ProductStore/ProductsStore";
 import { Meta } from "@utils/Meta";
 import { useLocalStore } from "@utils/useLocalStore";
 import { observer } from "mobx-react-lite";
