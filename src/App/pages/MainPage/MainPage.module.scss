@@ -27,3 +27,16 @@ header {
     justify-content: center;
     align-items: center;
 }
+.pagination_block {
+    margin: 50px 0;
+    padding: 50px 0;
+    @include block_default_layout();
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pagination_buttons {
+    width: auto;
+    display: flex;
+    flex-direction: row;
+}

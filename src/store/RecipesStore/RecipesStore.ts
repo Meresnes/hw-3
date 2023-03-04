@@ -13,20 +13,21 @@ import {
   reaction,
   runInAction,
 } from "mobx";
-import { useLocation } from "react-router-dom";
 
-type PrivateFields = "_list" | "_meta" | "_totalRes" | "_searchValue";
+type PrivateFields =
+  | "_list"
+  | "_meta"
+  | "_totalRes"
+  | "_searchValue"
+  | "_curentPage";
 
 export class RecipesStore implements ILocalStore {
   private _list: RecipesItemsModel[] = [];
   private _meta: Meta = Meta.initial;
-  private _totalRes: number | null = null;
-  private _searchValue: string = `${
-    useLocation().search.length > 8
-      ? useLocation().search.slice(8, useLocation().search.length)
-      : ""
-  }`;
+  private _totalRes: number = 1;
+  private _searchValue: string = "";
   private _timeouts: number[] = [];
+  private _curentPage: number = 1;
 
   constructor() {
     makeObservable<RecipesStore, PrivateFields>(this, {
@@ -34,10 +35,13 @@ export class RecipesStore implements ILocalStore {
       _meta: observable,
       _totalRes: observable,
       _searchValue: observable,
+      _curentPage: observable,
       list: computed,
       meta: computed,
       totalRes: computed,
       searchValue: computed,
+      сurentPage: computed,
+      setCurentPage: action,
       getRecipesList: action,
       setSearchValue: action,
     });
@@ -51,15 +55,22 @@ export class RecipesStore implements ILocalStore {
   get searchValue(): string {
     return this._searchValue;
   }
-  get totalRes(): number | null {
+  get totalRes(): number {
     return this._totalRes;
   }
+  get сurentPage(): number {
+    return this._curentPage;
+  }
+  setCurentPage = (value: number) => {
+    this._curentPage = value;
+  };
   setSearchValue = (value: string) => {
     this._searchValue = value;
   };
   async getRecipesList() {
     this._meta = Meta.loading;
     this._list = [];
+    this._curentPage = 1;
 
     const response: AxiosResponse = await axios({
       method: "GET",
@@ -73,11 +84,12 @@ export class RecipesStore implements ILocalStore {
         try {
           this._meta = Meta.success;
           const list = [];
+
           for (const item of response.data.results) {
             list.push(normalizeRecipesList(item));
           }
           this._list = list;
-          this._totalRes = response.data.number;
+          this._totalRes = response.data.results.length;
         } catch (e) {
           this._meta = Meta.error;
           this._list = [];

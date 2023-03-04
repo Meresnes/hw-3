@@ -1,0 +1,23 @@
+@import "@styles/variables.scss";
+.button {
+    height: 30px;
+    width: 30px;
+    margin: 10px;
+    background: $counter_color;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25%;
+    transition: all 0.8s;
+}
+.button:hover {
+    transition: all 0.8s;
+    box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.3);
+}
+.button_text {
+    @include block_main_font;
+}
+.active {
+    color: $loader_color;
+}
