@@ -21,11 +21,11 @@ export class ProductStore implements ILocalStore {
       _list: observable.ref,
       _meta: observable,
       _id: observable,
-      setId: action,
-      getProductList: action,
       list: computed,
       meta: computed,
       id: computed,
+      setId: action,
+      getProductList: action,
     });
   }
   get meta(): Meta {

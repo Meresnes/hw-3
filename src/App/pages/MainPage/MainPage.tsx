@@ -4,6 +4,7 @@ import Loader from "@components/Loader";
 import { RecipesItemsModel } from "@models/Recipes/index";
 import { RecipesStore } from "@store/RecipesStore/RecipesStore";
 import { Meta } from "@utils/Meta";
+import { PaginationFilter } from "@utils/PaginationFilter";
 import { useLocalStore } from "@utils/useLocalStore";
 import { observer } from "mobx-react-lite";
 import { useSearchParams } from "react-router-dom";
@@ -25,26 +26,40 @@ const MainPage: React.FC = () => {
     recipesStore.setCurentPage(
       searchParams.get("page") ? Number(searchParams.get("page")) : 1
     );
+    if (
+      searchParams.get("page") === String(recipesStore.curentPage) &&
+      searchParams.get("search") === recipesStore.searchValue
+    ) {
+      recipesStore.getRecipesList();
+    } else {
+      setSearchParams({
+        search: `${recipesStore.searchValue}`,
+        page: `${1}`,
+      });
+    }
+  }, [recipesStore, setSearchParams, searchParams]);
 
-    recipesStore.getRecipesList();
-  }, [recipesStore]);
+  const changePageHandler = useCallback(
+    (value: number) => {
+      recipesStore.setCurentPage(value);
+      setSearchParams({
+        search: `${recipesStore.searchValue}`,
+        page: `${recipesStore.curentPage}`,
+      });
+    },
+    [recipesStore, setSearchParams]
+  );
 
-  const changePageHandler = (value: number) => {
-    recipesStore.setCurentPage(value);
-    setSearchParams({
-      search: `${searchParams.get("search")}`,
-      page: `${value}`,
-    });
-  };
   const changeInputHandler = useCallback(
     (value: string) => {
+      recipesStore.setCurentPage(1);
       recipesStore.setSearchValue(value);
       setSearchParams({
         search: `${value}`,
-        page: "1",
+        page: `${recipesStore.curentPage}`,
       });
     },
-    [recipesStore]
+    [recipesStore, setSearchParams]
   );
 
   return (
@@ -61,34 +76,27 @@ const MainPage: React.FC = () => {
       <div className={styles.main_title}>Recipes</div>
       <div className={styles.food_block}>
         {recipesStore.meta === Meta.success
-          ? recipesStore.list
-              .filter(
-                (item, index) =>
-                  index > (recipesStore.сurentPage - 1) * 16 - 1 &&
-                  index < recipesStore.сurentPage * 16
-              )
-              .map((item: RecipesItemsModel) => (
-                <Card key={item.id} data={item} />
-              ))
-          : [...Array(16)].map((item) => (
-              <div key={item} className={styles.loader_item}>
-                {" "}
-                <Loader />
-              </div>
-            ))}
+          ? recipesStore.list.map((item: RecipesItemsModel) => (
+            <Card key={item.id} data={item} />
+          ))
+          : [...Array(recipesStore.recipesOnPageCount)].map((item) => (
+            <div key={item} className={styles.loader_item}>
+              {" "}
+              <Loader />
+            </div>
+          ))}
       </div>
       <div className={styles.pagination_block}>
         <div className={styles.pagination_buttons}>
-          {[
-            ...Array.from(
-              { length: Math.ceil(recipesStore.totalRes / 16) },
-              (_, index) => index + 1
-            ),
-          ].map((number) => (
+          {PaginationFilter(
+            recipesStore.curentPage,
+            recipesStore.totalRes,
+            recipesStore.recipesOnPageCount
+          ).map((number, index) => (
             <PaginationButton
-              key={number}
+              key={index}
               value={number}
-              activeValue={recipesStore.сurentPage}
+              activeValue={recipesStore.curentPage}
               onClickHandler={changePageHandler}
             />
           ))}

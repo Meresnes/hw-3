@@ -19,7 +19,8 @@ type PrivateFields =
   | "_meta"
   | "_totalRes"
   | "_searchValue"
-  | "_curentPage";
+  | "_curentPage"
+  | "_recipesOnPageCount";
 
 export class RecipesStore implements ILocalStore {
   private _list: RecipesItemsModel[] = [];
@@ -29,19 +30,22 @@ export class RecipesStore implements ILocalStore {
   private _timeouts: number[] = [];
   private _curentPage: number = 1;
   private _offsetValue: number = 0;
+  private readonly _recipesOnPageCount: number = 16;
 
   constructor() {
     makeObservable<RecipesStore, PrivateFields>(this, {
       _list: observable.ref,
       _meta: observable,
-      _totalRes: observable,
-      _searchValue: observable,
+      _totalRes: observable.ref,
+      _searchValue: observable.ref,
       _curentPage: observable,
+      _recipesOnPageCount: observable.ref,
       list: computed,
       meta: computed,
       totalRes: computed,
       searchValue: computed,
-      сurentPage: computed,
+      recipesOnPageCount: computed,
+      curentPage: computed,
       setCurentPage: action,
       getRecipesList: action,
       setSearchValue: action,
@@ -53,31 +57,38 @@ export class RecipesStore implements ILocalStore {
   get meta(): Meta {
     return this._meta;
   }
+  get recipesOnPageCount(): number {
+    return this._recipesOnPageCount;
+  }
   get searchValue(): string {
     return this._searchValue;
   }
   get totalRes(): number {
     return this._totalRes;
   }
-  get сurentPage(): number {
+  get curentPage(): number {
     return this._curentPage;
   }
   setCurentPage = (value: number) => {
     this._curentPage = value;
-    this._offsetValue = this._curentPage * 16;
   };
   setSearchValue = (value: string) => {
-    this._searchValue = value;
+    this._searchValue = value === "null" ? "" : value;
   };
   async getRecipesList() {
     this._meta = Meta.loading;
     this._list = [];
+    this._offsetValue = this._curentPage * this._recipesOnPageCount;
 
     const response: AxiosResponse = await axios({
       method: "GET",
       data: {},
       headers: {},
-      url: `${API_ENDPOINTS.API_DOMAIN}${API_ENDPOINTS.API_GET_RECIPES}${this._searchValue}${API_ENDPOINTS.API_RECIPES_PARAMS}${this._offsetValue}${API_ENDPOINTS.API_PARAMS}${API_ENDPOINTS.API_KEY}`,
+      url: `${API_ENDPOINTS.API_DOMAIN}${API_ENDPOINTS.API_GET_RECIPES}${
+        this._searchValue === "null" ? "" : this._searchValue
+      }${API_ENDPOINTS.API_RECIPES_PARAMS}${this._offsetValue}${
+        API_ENDPOINTS.API_PARAMS
+      }${API_ENDPOINTS.API_KEY}`,
     });
 
     runInAction(() => {
@@ -85,9 +96,7 @@ export class RecipesStore implements ILocalStore {
         try {
           this._meta = Meta.success;
           this._list = response.data.results.map(normalizeRecipesList);
-          console.log(response.data);
-          //this._totalRes = response.data.results.length;
-          this._totalRes = 150;
+          this._totalRes = response.data.totalResults;
         } catch (e) {
           this._meta = Meta.error;
           this._list = [];
@@ -97,22 +106,21 @@ export class RecipesStore implements ILocalStore {
   }
 
   destroy(): void {
-    this._qpReaction();
+    this._qpSearchReaction();
   }
-  private readonly _qpReaction: IReactionDisposer = reaction(
+  private readonly _qpSearchReaction: IReactionDisposer = reaction(
     () => rootStore.query.getParam("search"),
     () => {
       //Доделать отдельную модель для удаления старых таймаутов
-      const timeout: any = setTimeout(() => {
-        this._curentPage = 1;
-        this._offsetValue = 0;
-        this.getRecipesList();
-      }, 1000);
-      this._timeouts.forEach((timeoutId) => clearTimeout(timeoutId));
-      this._timeouts = [];
-      this._timeouts.push(timeout);
-    },
 
+      runInAction(() => {
+        const timeout: any = setTimeout(() => {
+          this.getRecipesList();
+        }, 1000);
+        this._timeouts.forEach((timeoutId) => clearTimeout(timeoutId));
+        this._timeouts = [];
+        this._timeouts.push(timeout);
+      });
+    }
   );
-
 }

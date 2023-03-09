@@ -4,7 +4,7 @@ import * as qs from "qs";
 type PrivateFields = "_params";
 
 export default class QueryParamsStore {
-  private _params: qs.ParsedQs = {};
+  private _params: any = { search: "", page: "" };
   private _search: string = "";
 
   constructor() {
@@ -14,9 +14,7 @@ export default class QueryParamsStore {
     });
   }
 
-  getParam(
-    key: string
-  ): undefined | string | string[] | qs.ParsedQs | qs.ParsedQs[] {
+  getParam(key: string): any {
     return this._params[key];
   }
 
@@ -24,7 +22,7 @@ export default class QueryParamsStore {
     search = search.startsWith("?") ? search.slice(1) : search;
     if (this._search !== search) {
       this._search = search;
-      this._params = qs.parse(search);
+      this._params = { ...this._params, search: qs.parse(search) };
     }
   }
 }
