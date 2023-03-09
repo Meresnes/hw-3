@@ -28,6 +28,7 @@ export class RecipesStore implements ILocalStore {
   private _searchValue: string = "";
   private _timeouts: number[] = [];
   private _curentPage: number = 1;
+  private _offsetValue: number = 0;
 
   constructor() {
     makeObservable<RecipesStore, PrivateFields>(this, {
@@ -63,6 +64,7 @@ export class RecipesStore implements ILocalStore {
   }
   setCurentPage = (value: number) => {
     this._curentPage = value;
+    this._offsetValue = this._curentPage * 16;
   };
   setSearchValue = (value: string) => {
     this._searchValue = value;
@@ -70,26 +72,22 @@ export class RecipesStore implements ILocalStore {
   async getRecipesList() {
     this._meta = Meta.loading;
     this._list = [];
-    this._curentPage = 1;
 
     const response: AxiosResponse = await axios({
       method: "GET",
       data: {},
       headers: {},
-      url: `${API_ENDPOINTS.API_DOMAIN}${API_ENDPOINTS.API_GET_RECIPES}${this._searchValue}${API_ENDPOINTS.API_RECIPES_PARAMS}${API_ENDPOINTS.API_KEY}`,
+      url: `${API_ENDPOINTS.API_DOMAIN}${API_ENDPOINTS.API_GET_RECIPES}${this._searchValue}${API_ENDPOINTS.API_RECIPES_PARAMS}${this._offsetValue}${API_ENDPOINTS.API_PARAMS}${API_ENDPOINTS.API_KEY}`,
     });
 
     runInAction(() => {
       if (response.status === 200) {
         try {
           this._meta = Meta.success;
-          const list = [];
-
-          for (const item of response.data.results) {
-            list.push(normalizeRecipesList(item));
-          }
-          this._list = list;
-          this._totalRes = response.data.results.length;
+          this._list = response.data.results.map(normalizeRecipesList);
+          console.log(response.data);
+          //this._totalRes = response.data.results.length;
+          this._totalRes = 150;
         } catch (e) {
           this._meta = Meta.error;
           this._list = [];
@@ -106,11 +104,15 @@ export class RecipesStore implements ILocalStore {
     () => {
       //Доделать отдельную модель для удаления старых таймаутов
       const timeout: any = setTimeout(() => {
+        this._curentPage = 1;
+        this._offsetValue = 0;
         this.getRecipesList();
       }, 1000);
       this._timeouts.forEach((timeoutId) => clearTimeout(timeoutId));
       this._timeouts = [];
       this._timeouts.push(timeout);
-    }
+    },
+
   );
+
 }

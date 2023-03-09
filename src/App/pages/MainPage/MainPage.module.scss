@@ -6,6 +6,7 @@ header {
     justify-content: right;
     padding: 30px 50px 20px 20px;
 }
+
 .food_block {
     @include block_default_layout();
     display: flex;
@@ -20,6 +21,7 @@ header {
     justify-content: center;
     color: rgb(255, 0, 0, 0.7);
 }
+
 .loader_item {
     height: 200px;
     width: 300px;
@@ -27,6 +29,7 @@ header {
     justify-content: center;
     align-items: center;
 }
+
 .pagination_block {
     margin: 50px 0;
     padding: 50px 0;
@@ -35,6 +38,7 @@ header {
     justify-content: center;
     align-items: center;
 }
+
 .pagination_buttons {
     width: auto;
     display: flex;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 
 import Loader from "@components/Loader";
 import { RecipesItemsModel } from "@models/Recipes/index";
@@ -6,7 +6,7 @@ import { RecipesStore } from "@store/RecipesStore/RecipesStore";
 import { Meta } from "@utils/Meta";
 import { useLocalStore } from "@utils/useLocalStore";
 import { observer } from "mobx-react-lite";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 import Card from "./components/Card/index";
 import Input from "./components/Input/index";
@@ -16,19 +16,36 @@ import styles from "./MainPage.module.scss";
 const MainPage: React.FC = () => {
   const recipesStore = useLocalStore(() => new RecipesStore());
 
-  const location = `${useLocation().search}`;
-  recipesStore.setSearchValue(
-    `${location.length > 8 ? location.slice(8, location.length) : ""}`
-  );
-
   const [searchParams, setSearchParams] = useSearchParams();
+
   useEffect(() => {
+    recipesStore.setSearchValue(
+      `${searchParams.get("search") ? searchParams.get("search") : ""}`
+    );
+    recipesStore.setCurentPage(
+      searchParams.get("page") ? Number(searchParams.get("page")) : 1
+    );
+
     recipesStore.getRecipesList();
   }, [recipesStore]);
 
   const changePageHandler = (value: number) => {
     recipesStore.setCurentPage(value);
+    setSearchParams({
+      search: `${searchParams.get("search")}`,
+      page: `${value}`,
+    });
   };
+  const changeInputHandler = useCallback(
+    (value: string) => {
+      recipesStore.setSearchValue(value);
+      setSearchParams({
+        search: `${value}`,
+        page: "1",
+      });
+    },
+    [recipesStore]
+  );
 
   return (
     <>
@@ -36,9 +53,8 @@ const MainPage: React.FC = () => {
         <Input
           value={recipesStore.searchValue}
           placeholder="Search"
-          onChange={(value) => {
-            recipesStore.setSearchValue(value);
-            setSearchParams(`search=${value}`);
+          onChange={(value: string) => {
+            changeInputHandler(value);
           }}
         />
       </header>
