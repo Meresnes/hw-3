@@ -1,36 +1,28 @@
-import React from "react";
+import React, { memo } from "react";
 
+import { RecipesItemsModel } from "@models/Recipes/index";
 import { Link } from "react-router-dom";
 
 import styles from "./Card.module.scss";
 export type CardProps = {
-  image: string;
-  title: string;
-  id: number;
-  calories: string;
-  ingredients: string[];
+  data: RecipesItemsModel;
 };
 
-const Card: React.FC<CardProps> = ({
-  image,
-  title = "title",
-  calories,
-  ingredients,
-  id,
-}) => {
-  const ingredientsList = ingredients.map((item: any) => item.name);
-
+const Card: React.FC<CardProps> = ({ data }) => {
+  const ingredientsList = data.ingredients.map((item: any) => item.name);
   return (
     <div className={styles.card}>
-      <Link to={`/product/${id}`}>
-        <img className={styles.card__image} src={image} alt={title} />
+      <Link to={`/product/${data.id}`}>
+        <img className={styles.card__image} src={data.image} alt={data.title} />
 
         <div className={styles.card__content_block}>
           <div className={styles.card__content_block__title}>
-            {title.split("").length > 15 ? `${title.slice(0, 15)}...` : title}
+            {data.title.split("").length > 15
+              ? `${data.title.slice(0, 15)}...`
+              : data.title}
           </div>
           <div className={styles.card__content_block__title_desktop}>
-            {title}
+            {data.title}
           </div>
           <div className={styles.card__content_block__subtitle}>
             {ingredientsList.length > 3
@@ -39,7 +31,7 @@ const Card: React.FC<CardProps> = ({
           </div>
 
           <div className={styles.card__content_block__calories}>
-            <p>{calories} kcal</p>{" "}
+            <p>{data.calories} kcal</p>{" "}
             <div className={styles.add_icon}>
               <div className={styles.add_icon__vertical_line}></div>
               <div className={styles.add_icon__horizontal_line}></div>
@@ -51,4 +43,4 @@ const Card: React.FC<CardProps> = ({
   );
 };
 
-export default Card;
+export default memo(Card);

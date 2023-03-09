@@ -8,7 +8,7 @@ export type InputProps = Omit<
   "onChange" | "value"
 > & {
   /** Значение поля */
-  value: string;
+  value: string | undefined;
   /** Callback, вызываемый при вводе данных в поле */
   onChange: (value: string) => void;
 };
@@ -26,7 +26,7 @@ const Input: React.FC<InputProps> = ({
     <input
       className={classNames}
       type="text"
-      value={value}
+      value={value === (null || "null") ? "" : value}
       placeholder={placeholder}
       disabled={disabled}
       onChange={(e) => onChange(e.target.value)}

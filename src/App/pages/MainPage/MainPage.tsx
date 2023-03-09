@@ -1,85 +1,108 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 
 import Loader from "@components/Loader";
-import { API_ENDPOINTS } from "@config/api";
-import axios from "axios";
+import { RecipesItemsModel } from "@models/Recipes/index";
+import { RecipesStore } from "@store/RecipesStore/RecipesStore";
+import { Meta } from "@utils/Meta";
+import { PaginationFilter } from "@utils/PaginationFilter";
+import { useLocalStore } from "@utils/useLocalStore";
+import { observer } from "mobx-react-lite";
+import { useSearchParams } from "react-router-dom";
 
 import Card from "./components/Card/index";
 import Input from "./components/Input/index";
+import PaginationButton from "./components/PaginationButton";
 import styles from "./MainPage.module.scss";
-type DataTypes = {
-  id: number;
-  title: string;
-  image: string;
-  nutrition: any;
-};
 
-const MainPage = () => {
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [searchValue, setSearchValuse] = useState("");
+const MainPage: React.FC = () => {
+  const recipesStore = useLocalStore(() => new RecipesStore());
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
   useEffect(() => {
-    const urlApi = `${API_ENDPOINTS.GET_RECIPES}${API_ENDPOINTS.API_KEY}`;
-    // const urlApi = `https://api.spoonacular.com/recipes/complexSearch?addRecipeNutrition=true&apiKey=`
-    const fetch = async () => {
-      const result = await axios({
-        method: "get",
-        url: urlApi,
+    recipesStore.setSearchValue(
+      `${searchParams.get("search") ? searchParams.get("search") : ""}`
+    );
+    recipesStore.setCurentPage(
+      searchParams.get("page") ? Number(searchParams.get("page")) : 1
+    );
+    if (
+      searchParams.get("page") === String(recipesStore.curentPage) &&
+      searchParams.get("search") === recipesStore.searchValue
+    ) {
+      recipesStore.getRecipesList();
+    } else {
+      setSearchParams({
+        search: `${recipesStore.searchValue}`,
+        page: `${1}`,
       });
-      setData(
-        result.data.results.map((item: DataTypes) => ({
-          id: item.id,
-          title: item.title,
-          image: item.image,
-          ingredients: item.nutrition.ingredients,
-          calories: item.nutrition.nutrients[0].amount,
-        }))
-      );
-      setIsLoading(false);
-    };
-    fetch();
-  }, []);
+    }
+  }, [recipesStore, setSearchParams, searchParams]);
 
-  const searchValueHandler = (value: string) => {
-    setSearchValuse(value);
-  };
+  const changePageHandler = useCallback(
+    (value: number) => {
+      recipesStore.setCurentPage(value);
+      setSearchParams({
+        search: `${recipesStore.searchValue}`,
+        page: `${recipesStore.curentPage}`,
+      });
+    },
+    [recipesStore, setSearchParams]
+  );
+
+  const changeInputHandler = useCallback(
+    (value: string) => {
+      recipesStore.setCurentPage(1);
+      recipesStore.setSearchValue(value);
+      setSearchParams({
+        search: `${value}`,
+        page: `${recipesStore.curentPage}`,
+      });
+    },
+    [recipesStore, setSearchParams]
+  );
 
   return (
     <>
       <header>
         <Input
-          value={searchValue}
+          value={recipesStore.searchValue}
           placeholder="Search"
-          onChange={(value) => searchValueHandler(value)}
+          onChange={(value: string) => {
+            changeInputHandler(value);
+          }}
         />
       </header>
-
       <div className={styles.main_title}>Recipes</div>
       <div className={styles.food_block}>
-        {isLoading &&
-          [...Array(12)].map((item) => (
+        {recipesStore.meta === Meta.success
+          ? recipesStore.list.map((item: RecipesItemsModel) => (
+            <Card key={item.id} data={item} />
+          ))
+          : [...Array(recipesStore.recipesOnPageCount)].map((item) => (
             <div key={item} className={styles.loader_item}>
               {" "}
               <Loader />
             </div>
           ))}
-        {!isLoading &&
-          data
-            .filter((item: any) =>
-              item.title.toLowerCase().includes(searchValue.toLocaleLowerCase())
-            )
-            .map((item: any) => (
-              <Card
-                key={item.id}
-                id={item.id}
-                image={item.image}
-                title={item.title}
-                calories={item.calories}
-                ingredients={item.ingredients}
-              />
-            ))}
+      </div>
+      <div className={styles.pagination_block}>
+        <div className={styles.pagination_buttons}>
+          {PaginationFilter(
+            recipesStore.curentPage,
+            recipesStore.totalRes,
+            recipesStore.recipesOnPageCount
+          ).map((number, index) => (
+            <PaginationButton
+              key={index}
+              value={number}
+              activeValue={recipesStore.curentPage}
+              onClickHandler={changePageHandler}
+            />
+          ))}
+        </div>
       </div>
     </>
   );
 };
-export default MainPage;
+export default observer(MainPage);

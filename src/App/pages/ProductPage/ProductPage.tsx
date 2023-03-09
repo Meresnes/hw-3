@@ -1,44 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import Loader from "@components/Loader";
 import { LoaderSize } from "@components/Loader/Loader";
-import axios from "axios";
+import { ProductStore } from "@store/ProductStore/ProductsStore";
+import { Meta } from "@utils/Meta";
+import { useLocalStore } from "@utils/useLocalStore";
+import { observer } from "mobx-react-lite";
 import { Link, useParams } from "react-router-dom";
 
 import HealthIcon from "./images/HealthIcon.svg";
 import TimeIcon from "./images/TimeIcon.svg";
 import styles from "./ProductPage.module.scss";
 
-const apiKey = "22fca36cc74d47d6b3f5ac032690c948";
-
-//https://api.spoonacular.com/recipes/715415/information?apiKey=0aa691061ee141258c142261650e5b08
-const ProductPage = () => {
-  const [productData, setProductData] = useState<any>({});
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+const ProductPage: React.FC = () => {
   const { id } = useParams();
+  const productStore = useLocalStore(() => new ProductStore());
+
   useEffect(() => {
-    const fetch = async () => {
-      const result: object | any = await axios({
-        method: "get",
-        url: `https://api.spoonacular.com/recipes/${id}/information?includeNutrition=false&apiKey=${apiKey}`,
-      });
-      setProductData(result.data);
-      setIsLoading(false);
-    };
-    fetch();
-  }, [id]);
-  // console.log(productData)
+    productStore.setId(id);
+    productStore.getProductList();
+  }, [id, productStore]);
 
   return (
     <>
-      {isLoading ? (
+      {productStore.meta === Meta.loading ? (
         <div className={styles.loader_block}>
           <Loader size={LoaderSize.l} />
         </div>
       ) : (
         <div className={styles.product_block}>
           <div className={styles.product_block__image_block}>
-            <img src={productData.image} alt={productData.title} />
+            <img src={productStore.list.image} alt={productStore.list.title} />
             <Link to={"/"}>
               <div className={styles.go_back_icon}>
                 {" "}
@@ -48,27 +40,30 @@ const ProductPage = () => {
           </div>
           <div className={styles.product_block__description_block}>
             <div className={styles.scroller}></div>
-            <div className={styles.product_block__title}>
-              {productData.title}
-            </div>
+            <div className={styles.product_block__title}></div>
             <div className={styles.product_block__short_info_block}>
               <p>
                 <img src={TimeIcon} alt="Time-icon" />{" "}
-                {productData.readyInMinutes} minutes
+                {productStore.list.cookingTime} minutes
               </p>
               <p>
                 <img src={HealthIcon} alt="Helth-icon" />
-                {productData.healthScore} health score
+                {productStore.list.healthScore} health score
               </p>
             </div>
-            <ul>
-              {/* {productData.length > 0 && productData.extendedIngredients.map((item: any) => (
-                            <li>{item.nameClean}</li>
-                        )).filter((item: any, index: number) => index < 5)} */}
-            </ul>
+
             <div className={styles.product_block__main_info}>
+              <p>Ingredients:</p>
+              <ul>
+                {productStore.list.ingredients?.map((el: any) => (
+                  <li key={el.id}>{el.name}</li>
+                ))}
+              </ul>
+              <p>How to cook:</p>
               <div
-                dangerouslySetInnerHTML={{ __html: productData.instructions }}
+                dangerouslySetInnerHTML={{
+                  __html: productStore.list.descripton || "",
+                }}
               />
             </div>
           </div>
@@ -78,4 +73,4 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
+export default observer(ProductPage);

@@ -1,5 +1,8 @@
 export const API_ENDPOINTS = {
-  API_KEY: "22fca36cc74d47d6b3f5ac032690c948",
-  GET_RECIPES:
-    "https://api.spoonacular.com/recipes/complexSearch?addRecipeNutrition=true&apiKey=",
+  API_KEY: "a9561dcfc94a417d806cbd80aea646bd",
+  API_DOMAIN: "https://api.spoonacular.com/recipes/",
+  API_GET_RECIPES: "complexSearch?query=",
+  API_RECIPES_PARAMS: "&addRecipeNutrition=true&number=16&offset=",
+  API_PARAMS: "&apiKey=",
+  API_PRODUCT_PARAMS: "/information?includeNutrition=false&apiKey=",
 };
