@@ -1,0 +1,30 @@
+$default_font-family: "Avenir";
+$default_body_backbround: #f5f5f5;
+$default_background_color: #ffffff;
+$counter_color: #ffcbcb;
+$loader_color: #ff0000;
+
+@mixin block_default_layout($max-width: 1400px, $background: $default_background_color) {
+    background: $background;
+    max-width: $max-width;
+    box-sizing: border-box;
+    margin: auto;
+}
+@mixin page_title_font {
+    font-family: $default_font-family;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 35px;
+}
+@mixin block_main_font {
+    font-family: $default_font-family;
+    font-size: 16px;
+    line-height: 25px;
+    color: #0d0d0d;
+}
+@mixin block_small-text_font {
+    font-family: $default_font-family;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 400;
+}

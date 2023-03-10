@@ -1,10 +1,11 @@
-import React from "react";
+import * as React from 'react';
+import { render } from 'react-dom';
+import 'regenerator-runtime';
 
-import ReactDOM from "react-dom/client";
+import styles from "./styles.module.scss";
+import Loader from '@components/Loader/index';
 
-import App from "./App/index";
+render(<div className={styles.title}>
+    adasdasdasdas
+    <Loader /> </div>, document.getElementById('root'));
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
-root.render(<App />);
