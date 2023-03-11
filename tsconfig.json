@@ -13,6 +13,15 @@
         "jsx": "react",
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "esnext"
+        ],
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
     },
     "include": [
         "src/**/*",
