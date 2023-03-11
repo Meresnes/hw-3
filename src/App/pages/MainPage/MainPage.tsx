@@ -18,7 +18,6 @@ const MainPage: React.FC = () => {
   const recipesStore = useLocalStore(() => new RecipesStore());
 
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log("render")
   useEffect(() => {
     recipesStore.setSearchValue(
       `${searchParams.get("search") ? searchParams.get("search") : ""}`
@@ -37,6 +36,7 @@ const MainPage: React.FC = () => {
         page: `${1}`,
       });
     }
+
   }, [recipesStore]);
 
   const changePageHandler = useCallback(
@@ -49,6 +49,7 @@ const MainPage: React.FC = () => {
     },
     [recipesStore, setSearchParams]
   );
+
 
   const changeInputHandler = useCallback(
     (value: string) => {
