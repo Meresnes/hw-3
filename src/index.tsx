@@ -1,11 +1,17 @@
-import * as React from 'react';
-import { render } from 'react-dom';
-import 'regenerator-runtime';
+import React from "react";
 
-import styles from "./styles.module.scss";
-import Loader from '@components/Loader/index';
+import "@config/configureMobX";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
 
-render(<div className={styles.title}>
-    adasdasdasdas
-    <Loader /> </div>, document.getElementById('root'));
+import "regenerator-runtime";
+import App from "./App/index";
 
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
+root.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);

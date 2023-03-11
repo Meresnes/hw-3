@@ -1,0 +1,39 @@
+.input {
+    width: 370px;
+    /* width: 176px; */
+    height: 36px;
+    background: linear-gradient(98deg, #fff0f0 -0.8%, #ffdfdf 101%);
+    border: none;
+    border-radius: 7px;
+    vertical-align: middle;
+    padding: 0 0 0 10px;
+    box-sizing: border-box;
+    font-family: "Avenir";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+
+    color: #000000;
+}
+.input::placeholder {
+    color: rgba(59, 59, 59, 0.5);
+}
+
+.input:focus-visible {
+    outline: none;
+}
+.input:focus {
+    background: linear-gradient(98deg, #ffbcbc -0.8%, #ffa1a1 101%);
+}
+.input:disabled {
+    background: linear-gradient(98deg, #f2f2f2 -0.8%, #d9d9d9 101%);
+}
+.multi-dropdown__body__item {
+    border-radius: 0;
+    display: flex;
+}
+.multi-dropdown__item {
+    display: block;
+    text-align: left;
+}

@@ -88,11 +88,12 @@ module.exports = {
       "@styles": path.join(srcPath, 'styles'),
       "@utils": path.join(srcPath, 'utils'),
       "@models": path.join(srcPath, 'models'),
+      "@store": path.join(srcPath, 'store'),
     }
   },
   devServer: {
-    host: '127.0.0.1',
-    port: 9000,
+    // host: '127.0.0.1',
+    port: 3000,
     hot: true,
     historyApiFallback: true,
   }
