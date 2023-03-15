@@ -1,5 +1,5 @@
-
 import React from "react";
+
 import { useQueryParamsStoreInit } from "@store/RootStore/hooks/useQueryParamsStoreInit";
 import { Route, Routes } from "react-router-dom";
 

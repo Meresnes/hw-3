@@ -18,6 +18,7 @@ const MainPage: React.FC = () => {
   const recipesStore = useLocalStore(() => new RecipesStore());
 
   const [searchParams, setSearchParams] = useSearchParams();
+
   useEffect(() => {
     recipesStore.setSearchValue(
       `${searchParams.get("search") ? searchParams.get("search") : ""}`
@@ -36,7 +37,6 @@ const MainPage: React.FC = () => {
         page: `${1}`,
       });
     }
-
   }, [recipesStore]);
 
   const changePageHandler = useCallback(
@@ -49,7 +49,6 @@ const MainPage: React.FC = () => {
     },
     [recipesStore, setSearchParams]
   );
-
 
   const changeInputHandler = useCallback(
     (value: string) => {
@@ -78,14 +77,14 @@ const MainPage: React.FC = () => {
       <div className={styles.food_block}>
         {recipesStore.meta === Meta.success
           ? recipesStore.list.map((item: RecipesItemsModel) => (
-            <Card key={item.id} data={item} />
-          ))
+              <Card key={item.id} data={item} />
+            ))
           : [...Array(recipesStore.recipesOnPageCount)].map((item) => (
-            <div key={item} className={styles.loader_item}>
-              {" "}
-              <Loader />
-            </div>
-          ))}
+              <div key={item} className={styles.loader_item}>
+                {" "}
+                <Loader />
+              </div>
+            ))}
       </div>
       <div className={styles.pagination_block}>
         <div className={styles.pagination_buttons}>
