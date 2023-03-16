@@ -43,6 +43,7 @@ module.exports = {
   output: {
     path: buildPath,
     filename: "bundle.js",
+    publicPath: '/',
   },
 
   plugins: [
@@ -58,7 +59,11 @@ module.exports = {
     new TsCheckerPlugin(),
     new ESLintPlugin(),
   ].filter(Boolean),
-
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
+  },
   module: {
     rules: [
       {
@@ -103,4 +108,5 @@ module.exports = {
     hot: true,
     historyApiFallback: true,
   },
+
 };

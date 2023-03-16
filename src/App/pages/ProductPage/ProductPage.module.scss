@@ -8,7 +8,7 @@
 }
 .product_block {
     margin: 20px auto;
-    width: 400px;
+    max-width: 400px;
     background: $default_background_color;
     display: flex;
     align-items: center;
@@ -90,4 +90,18 @@
     border-left: 3px solid rgb(255, 0, 0, 0.8);
     border-radius: 2px;
     transform: rotate(-45deg);
+}
+@media screen and (min-width: 800px) {
+    .product_block {
+        @include block_default_layout();
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        min-height: 80vh;
+        justify-content: space-around;
+    }
+    .product_block__description_block {
+        width: 1200px;
+    }
 }

@@ -10,7 +10,6 @@ export type CardProps = {
 
 const Card: React.FC<CardProps> = ({ data }) => {
   const ingredientsList = data.ingredients.map((item: any) => item.name);
-  console.log(data.id)
   return (
     <div className={styles.card}>
       <Link to={`/product/${data.id}`}>
