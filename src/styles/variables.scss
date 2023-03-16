@@ -10,18 +10,21 @@ $loader_color: #ff0000;
     box-sizing: border-box;
     margin: auto;
 }
+
 @mixin page_title_font {
     font-family: $default_font-family;
     font-weight: 600;
     font-size: 32px;
     line-height: 35px;
 }
+
 @mixin block_main_font {
     font-family: $default_font-family;
     font-size: 16px;
     line-height: 25px;
     color: #0d0d0d;
 }
+
 @mixin block_small-text_font {
     font-family: $default_font-family;
     font-size: 12px;

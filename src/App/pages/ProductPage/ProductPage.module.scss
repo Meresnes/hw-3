@@ -77,6 +77,10 @@
     left: 20px;
     border-radius: 7px;
     cursor: pointer;
+    &:hover {
+        transition: all 0.3s;
+        box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.45);
+    }
 }
 .go_back_icon__arrow {
     width: 10px;

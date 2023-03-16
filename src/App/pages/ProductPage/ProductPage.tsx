@@ -13,14 +13,13 @@ import TimeIcon from "./images/TimeIcon.svg";
 import styles from "./ProductPage.module.scss";
 
 const ProductPage: React.FC = () => {
+
   const { id } = useParams();
   const productStore = useLocalStore(() => new ProductStore());
-
   useEffect(() => {
     productStore.setId(id);
-    productStore.getProductList();
-  }, [id, productStore]);
-
+  }, [productStore, id]);
+  console.log(productStore.list)
   return (
     <>
       {productStore.meta === Meta.loading ? (
@@ -40,7 +39,7 @@ const ProductPage: React.FC = () => {
           </div>
           <div className={styles.product_block__description_block}>
             <div className={styles.scroller}></div>
-            <div className={styles.product_block__title}></div>
+            <div className={styles.product_block__title}> {productStore.list.title}</div>
             <div className={styles.product_block__short_info_block}>
               <p>
                 <img src={TimeIcon} alt="Time-icon" />{" "}
@@ -55,8 +54,8 @@ const ProductPage: React.FC = () => {
             <div className={styles.product_block__main_info}>
               <p>Ingredients:</p>
               <ul>
-                {productStore.list.ingredients?.map((el: any) => (
-                  <li key={el.id}>{el.name}</li>
+                {productStore.list.ingredients?.map((el: any, index: number) => (
+                  <li key={index}>{el.name}</li>
                 ))}
               </ul>
               <p>How to cook:</p>

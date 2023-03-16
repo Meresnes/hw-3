@@ -6,8 +6,10 @@ import axios, { AxiosResponse } from "axios";
 import {
   action,
   computed,
+  IReactionDisposer,
   makeObservable,
   observable,
+  reaction,
   runInAction,
 } from "mobx";
 
@@ -59,5 +61,11 @@ export class ProductStore implements ILocalStore {
       } else this._meta = Meta.error;
     });
   }
-  destroy(): void {}
+  destroy(): void { }
+  private readonly _idReaction: IReactionDisposer = reaction(
+    () => this._id,
+    () => {
+      this.getProductList()
+    }
+  );
 }

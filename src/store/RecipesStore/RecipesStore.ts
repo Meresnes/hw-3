@@ -78,7 +78,8 @@ export class RecipesStore implements ILocalStore {
   async getRecipesList() {
     this._meta = Meta.loading;
     this._list = [];
-    this._offsetValue = this._curentPage * this._recipesOnPageCount;
+
+    this._offsetValue = (this._curentPage - 1) * this._recipesOnPageCount;
 
     const response: AxiosResponse = await axios({
       method: "GET",

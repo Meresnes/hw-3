@@ -10,19 +10,24 @@ export type CardProps = {
 
 const Card: React.FC<CardProps> = ({ data }) => {
   const ingredientsList = data.ingredients.map((item: any) => item.name);
+  console.log(data.id)
   return (
     <div className={styles.card}>
       <Link to={`/product/${data.id}`}>
+
         <img className={styles.card__image} src={data.image} alt={data.title} />
 
         <div className={styles.card__content_block}>
           <div className={styles.card__content_block__title}>
             {data.title.split("").length > 15
-              ? `${data.title.slice(0, 15)}...`
+              ? `${data.title.slice(0, 20)}...`
               : data.title}
           </div>
           <div className={styles.card__content_block__title_desktop}>
-            {data.title}
+
+            {data.title.split("").length > 45
+              ? `${data.title.slice(0, 45)}...`
+              : data.title}
           </div>
           <div className={styles.card__content_block__subtitle}>
             {ingredientsList.length > 3

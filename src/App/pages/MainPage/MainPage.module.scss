@@ -9,9 +9,11 @@ header {
 
 .food_block {
     @include block_default_layout();
+    position: relative;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    min-height: 80vh;
     justify-content: space-around;
 }
 .main_title {
@@ -43,4 +45,21 @@ header {
     width: auto;
     display: flex;
     flex-direction: row;
+}
+.no_results_block {
+    margin-top: 10%;
+    display: flex;
+    height: auto;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.no_results_block__image {
+    max-width: 250px;
+}
+.no_results_block__text {
+    @include page_title_font();
+    color: rgba(194, 3, 3, 0.6);
+    margin-bottom: 50px;
 }

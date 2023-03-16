@@ -15,15 +15,15 @@ const getSettingsForStyles = (withModules = false) => {
     !withModules
       ? "css-loader"
       : {
-          loader: "css-loader",
-          options: {
-            modules: {
-              localIdentName: !isProd
-                ? "[path][name]__[local]"
-                : "[hash:base64]",
-            },
+        loader: "css-loader",
+        options: {
+          modules: {
+            localIdentName: !isProd
+              ? "[path][name]__[local]"
+              : "[hash:base64]",
           },
         },
+      },
     {
       loader: "postcss-loader",
       options: {
