@@ -13,13 +13,12 @@ import TimeIcon from "./images/TimeIcon.svg";
 import styles from "./ProductPage.module.scss";
 
 const ProductPage: React.FC = () => {
-
   const { id } = useParams();
   const productStore = useLocalStore(() => new ProductStore());
   useEffect(() => {
     productStore.setId(id);
   }, [productStore, id]);
-  console.log(productStore.list)
+  console.log(productStore.list);
   return (
     <>
       {productStore.meta === Meta.loading ? (
@@ -29,17 +28,23 @@ const ProductPage: React.FC = () => {
       ) : (
         <div className={styles.product_block}>
           <div className={styles.product_block__image_block}>
-            <img src={productStore.list.image} alt={productStore.list.title} />
+            <img className={styles.product_block__image} src={productStore.list.image} alt={productStore.list.title} />
             <Link to={"/"}>
               <div className={styles.go_back_icon}>
                 {" "}
                 <div className={styles.go_back_icon__arrow}></div>{" "}
               </div>
             </Link>
+            <span className={styles.product_block__title_desctop}>
+              {productStore.list.title}
+            </span>
           </div>
           <div className={styles.product_block__description_block}>
             <div className={styles.scroller}></div>
-            <div className={styles.product_block__title}> {productStore.list.title}</div>
+            <div className={styles.product_block__title}>
+              {" "}
+              {productStore.list.title}
+            </div>
             <div className={styles.product_block__short_info_block}>
               <p>
                 <img src={TimeIcon} alt="Time-icon" />{" "}
@@ -53,11 +58,16 @@ const ProductPage: React.FC = () => {
 
             <div className={styles.product_block__main_info}>
               <p>Ingredients:</p>
-              <ul>
-                {productStore.list.ingredients?.map((el: any, index: number) => (
-                  <li key={index}>{el.name}</li>
-                ))}
-              </ul>
+              <div className={styles.ingredients_block}>
+                <ul>
+                  {productStore.list.ingredients?.map(
+                    (el: any, index: number) => (
+                      <li className={styles.ingredients_block__ingredient} key={index}>{el.name}</li>
+                    )
+                  )}
+                </ul>
+              </div>
+
               <p>How to cook:</p>
               <div
                 dangerouslySetInnerHTML={{

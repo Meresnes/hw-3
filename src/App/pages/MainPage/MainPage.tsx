@@ -9,10 +9,10 @@ import { useLocalStore } from "@utils/useLocalStore";
 import { observer } from "mobx-react-lite";
 import { useSearchParams } from "react-router-dom";
 
-import SadSmile from "./images/sad_cat.png"
 import Card from "./components/Card/index";
 import Input from "./components/Input/index";
 import PaginationButton from "./components/PaginationButton";
+import SadSmile from "./images/sad_cat.png";
 import styles from "./MainPage.module.scss";
 
 const MainPage: React.FC = () => {
@@ -76,19 +76,29 @@ const MainPage: React.FC = () => {
       </header>
       <div className={styles.main_title}>Recipes</div>
       <div className={styles.food_block}>
-        {recipesStore.meta === Meta.success
-          ? recipesStore.list.length > 0 ? recipesStore.list.map((item: RecipesItemsModel) => (
-            <Card key={item.id} data={item} />
-          )) : <div className={styles.no_results_block}>
-            <p className={styles.no_results_block__text}>Nothing found</p>
-            <img className={styles.no_results_block__image} src={SadSmile} alt="SadIcon" />
-          </div>
-          : [...Array(recipesStore.recipesOnPageCount)].map((item) => (
+        {recipesStore.meta === Meta.success ? (
+          recipesStore.list.length > 0 ? (
+            recipesStore.list.map((item: RecipesItemsModel) => (
+              <Card key={item.id} data={item} />
+            ))
+          ) : (
+            <div className={styles.no_results_block}>
+              <p className={styles.no_results_block__text}>Nothing found</p>
+              <img
+                className={styles.no_results_block__image}
+                src={SadSmile}
+                alt="SadIcon"
+              />
+            </div>
+          )
+        ) : (
+          [...Array(recipesStore.recipesOnPageCount)].map((item) => (
             <div key={item} className={styles.loader_item}>
               {" "}
               <Loader />
             </div>
-          ))}
+          ))
+        )}
       </div>
       <div className={styles.pagination_block}>
         <div className={styles.pagination_buttons}>

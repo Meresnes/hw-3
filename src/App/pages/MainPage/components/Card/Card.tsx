@@ -13,7 +13,6 @@ const Card: React.FC<CardProps> = ({ data }) => {
   return (
     <div className={styles.card}>
       <Link to={`/product/${data.id}`}>
-
         <img className={styles.card__image} src={data.image} alt={data.title} />
 
         <div className={styles.card__content_block}>
@@ -23,7 +22,6 @@ const Card: React.FC<CardProps> = ({ data }) => {
               : data.title}
           </div>
           <div className={styles.card__content_block__title_desktop}>
-
             {data.title.split("").length > 45
               ? `${data.title.slice(0, 45)}...`
               : data.title}

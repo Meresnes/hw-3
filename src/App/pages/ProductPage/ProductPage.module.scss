@@ -1,71 +1,11 @@
 @import "@styles/variables.scss";
+
 .loader_block {
     height: 100vh;
     @include block_default_layout(1400px, $default_background_color);
     display: flex;
     justify-content: center;
     align-items: center;
-}
-.product_block {
-    margin: 20px auto;
-    max-width: 400px;
-    background: $default_background_color;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    overflow: hidden;
-    height: auto;
-    border: 2px solid $counter_color;
-    border-radius: 7px;
-}
-.product_block__image_block {
-    box-sizing: border-box;
-    position: relative;
-    width: 400px;
-}
-.product-block__image-block > img {
-    max-width: 300px;
-    max-height: 200px;
-}
-.scroller {
-    width: 58px;
-    height: 5px;
-    background: $counter_color;
-    border-radius: 12px;
-    margin: 0 auto 20px auto;
-}
-
-.product_block__description_block {
-    padding: 30px;
-    border-radius: 7px;
-    box-sizing: border-box;
-    display: block;
-    flex-direction: column;
-    align-items: center;
-    max-width: 400px;
-}
-.product_block__short_info_block {
-    margin: 15px;
-    max-width: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    color: rgb(59, 59, 59, 0.3);
-    p {
-        align-items: center;
-        display: flex;
-        img {
-            margin-right: 5px;
-        }
-    }
-}
-.product_block__main_info {
-    @include block_main_font;
-}
-.product_block__title {
-    font-weight: 600;
-    font-size: 27px;
-    color: #09051c;
 }
 .go_back_icon {
     position: absolute;
@@ -77,6 +17,7 @@
     left: 20px;
     border-radius: 7px;
     cursor: pointer;
+    transition: all 0.3s;
     &:hover {
         transition: all 0.3s;
         box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.45);
@@ -91,17 +32,138 @@
     border-radius: 2px;
     transform: rotate(-45deg);
 }
-@media screen and (min-width: 800px) {
+
+.product_block__main_info {
+    @include block_main_font;
+}
+
+.product_block__short_info_block {
+    margin: 30px auto;
+    max-width: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: rgb(59, 59, 59, 0.3);
+    p {
+        align-items: center;
+        display: flex;
+        img {
+            margin-right: 5px;
+        }
+    }
+}
+.product_block {
+    margin: 20px auto;
+    max-width: 400px;
+    background: $default_background_color;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+    height: auto;
+    border: 2px solid $counter_color;
+    border-radius: 7px;
+}
+
+@media screen and (max-width: 800px) {
+    .product_block__image_block {
+        box-sizing: border-box;
+        position: relative;
+        width: 400px;
+    }
+    .product_block__image {
+        width: auto;
+    }
+
+    .scroller {
+        width: 58px;
+        height: 5px;
+        background: $counter_color;
+        border-radius: 12px;
+        margin: 0 auto 20px auto;
+    }
+
+    .product_block__description_block {
+        padding: 30px;
+        border-radius: 7px;
+        box-sizing: border-box;
+        display: block;
+        flex-direction: column;
+        align-items: center;
+        max-width: 800px;
+    }
+
+    .product_block__title {
+        font-weight: 600;
+        font-size: 27px;
+        color: #09051c;
+    }
+
+    .product_block__title_desctop {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 801px) {
     .product_block {
         @include block_default_layout();
         position: relative;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         flex-wrap: wrap;
         min-height: 80vh;
         justify-content: space-around;
     }
+
     .product_block__description_block {
-        width: 1200px;
+        width: 800px;
+    }
+
+    .scroller {
+        display: none;
+    }
+
+    .product_block__image_block {
+        width: 700px;
+        margin: auto;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: center;
+        margin-top: 50px;
+    }
+
+    .product_block__image {
+        width: 300px;
+        border-radius: 7px;
+    }
+
+    .product_block__title {
+        display: none;
+    }
+
+    .product_block__title_desctop {
+        display: block;
+        position: relative;
+        font-weight: 600;
+        margin-left: 120px;
+        font-size: 27px;
+        color: #09051c;
+        width: 500px;
+        height: auto;
+    }
+
+    .product_block__short_info_block {
+        width: 500px;
+    }
+
+    .ingredients_block > ul {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .ingredients_block__ingredient {
+        margin-left: 15px;
     }
 }

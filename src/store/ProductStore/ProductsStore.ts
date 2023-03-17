@@ -61,11 +61,11 @@ export class ProductStore implements ILocalStore {
       } else this._meta = Meta.error;
     });
   }
-  destroy(): void { }
+  destroy(): void {}
   private readonly _idReaction: IReactionDisposer = reaction(
     () => this._id,
     () => {
-      this.getProductList()
+      this.getProductList();
     }
   );
 }

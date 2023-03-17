@@ -4,5 +4,5 @@ configure({
   useProxies: "ifavailable",
   computedRequiresReaction: true,
   reactionRequiresObservable: true,
-  enforceActions: "always"
+  enforceActions: "always",
 });
