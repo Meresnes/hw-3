@@ -85,9 +85,11 @@ export class RecipesStore implements ILocalStore {
       method: "GET",
       data: {},
       headers: {},
-      url: `${API_ENDPOINTS.API_DOMAIN}${API_ENDPOINTS.API_GET_RECIPES}${this._searchValue === "null" ? "" : this._searchValue
-        }${API_ENDPOINTS.API_RECIPES_PARAMS}${this._offsetValue}${API_ENDPOINTS.API_PARAMS
-        }${API_ENDPOINTS.API_KEY}`,
+      url: `${API_ENDPOINTS.API_DOMAIN}${API_ENDPOINTS.API_GET_RECIPES}${
+        this._searchValue === "null" ? "" : this._searchValue
+      }${API_ENDPOINTS.API_RECIPES_PARAMS}${this._offsetValue}${
+        API_ENDPOINTS.API_PARAMS
+      }${API_ENDPOINTS.API_KEY}`,
     });
 
     runInAction(() => {

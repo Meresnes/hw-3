@@ -50,7 +50,7 @@ const MainPage: React.FC = () => {
         search: `${recipesStore.searchValue}`,
         page: `${recipesStore.curentPage}`,
       });
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     },
     [recipesStore, setSearchParams]
   );
