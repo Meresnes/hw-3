@@ -110,8 +110,6 @@ export class RecipesStore implements ILocalStore {
   private readonly _qpSearchReaction: IReactionDisposer = reaction(
     () => rootStore.query.getParam("search"),
     () => {
-      //Доделать отдельную модель для удаления старых таймаутов
-
       runInAction(() => {
         const timeout: any = setTimeout(() => {
           this.getRecipesList();

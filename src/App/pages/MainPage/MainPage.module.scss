@@ -16,6 +16,7 @@ header {
     min-height: 80vh;
     justify-content: space-around;
 }
+
 .main_title {
     @include block_default_layout();
     @include page_title_font();
@@ -47,6 +48,7 @@ header {
     display: flex;
     flex-direction: row;
 }
+
 .no_results_block {
     margin-top: 10%;
     display: flex;
@@ -59,6 +61,7 @@ header {
 .no_results_block__image {
     max-width: 250px;
 }
+
 .no_results_block__text {
     @include page_title_font();
     color: rgba(194, 3, 3, 0.6);

@@ -15,9 +15,11 @@ import styles from "./ProductPage.module.scss";
 const ProductPage: React.FC = () => {
   const { id } = useParams();
   const productStore = useLocalStore(() => new ProductStore());
+
   useEffect(() => {
     productStore.setId(id);
   }, [productStore, id]);
+
   return (
     <>
       {productStore.meta === Meta.loading ? (
@@ -34,8 +36,7 @@ const ProductPage: React.FC = () => {
             />
             <Link to={"/"}>
               <div className={styles.go_back_icon}>
-                {" "}
-                <div className={styles.go_back_icon__arrow}></div>{" "}
+                <div className={styles.go_back_icon__arrow}></div>
               </div>
             </Link>
             <span className={styles.product_block__title_desctop}>
@@ -45,12 +46,11 @@ const ProductPage: React.FC = () => {
           <div className={styles.product_block__description_block}>
             <div className={styles.scroller}></div>
             <div className={styles.product_block__title}>
-              {" "}
               {productStore.list.title}
             </div>
             <div className={styles.product_block__short_info_block}>
               <p>
-                <img src={TimeIcon} alt="Time-icon" />{" "}
+                <img src={TimeIcon} alt="Time-icon" />
                 {productStore.list.cookingTime} minutes
               </p>
               <p>
@@ -78,6 +78,7 @@ const ProductPage: React.FC = () => {
 
               <p className={styles.product_block__small_title}>How to cook:</p>
               <div
+                className={styles.main_text_block}
                 dangerouslySetInnerHTML={{
                   __html: productStore.list.descripton || "",
                 }}

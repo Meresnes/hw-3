@@ -20,16 +20,19 @@ const MainPage: React.FC = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const searchParamsSearchValue = searchParams.get("search");
+  const searchParamsPageValue = searchParams.get("page");
+
   useEffect(() => {
     recipesStore.setSearchValue(
-      `${searchParams.get("search") ? searchParams.get("search") : ""}`
+      `${searchParamsSearchValue ? searchParamsSearchValue : ""}`
     );
     recipesStore.setCurentPage(
-      searchParams.get("page") ? Number(searchParams.get("page")) : 1
+      searchParamsPageValue ? Number(searchParamsPageValue) : 1
     );
     if (
-      searchParams.get("page") === String(recipesStore.curentPage) &&
-      searchParams.get("search") === recipesStore.searchValue
+      searchParamsPageValue === String(recipesStore.curentPage) &&
+      searchParamsSearchValue === recipesStore.searchValue
     ) {
       recipesStore.getRecipesList();
     } else {
@@ -47,6 +50,7 @@ const MainPage: React.FC = () => {
         search: `${recipesStore.searchValue}`,
         page: `${recipesStore.curentPage}`,
       });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     },
     [recipesStore, setSearchParams]
   );
@@ -94,7 +98,6 @@ const MainPage: React.FC = () => {
         ) : (
           [...Array(recipesStore.recipesOnPageCount)].map((item) => (
             <div key={item} className={styles.loader_item}>
-              {" "}
               <Loader />
             </div>
           ))

@@ -1,4 +1,5 @@
 @import "@styles/variables.scss";
+
 .product_block__small_title {
     font-size: 22px;
     font-weight: 600;
@@ -21,8 +22,8 @@
     background: rgb(255, 0, 0, 0.35);
     width: 45px;
     height: 45px;
-    top: 40px;
-    left: 20px;
+    top: 20px;
+    left: 120px;
     border-radius: 7px;
     cursor: pointer;
     transition: all 0.3s;
@@ -32,6 +33,7 @@
         opacity: 0.6;
     }
 }
+
 .go_back_icon__arrow {
     width: 10px;
     height: 10px;
@@ -53,6 +55,7 @@
     align-items: center;
     justify-content: space-around;
     color: rgb(59, 59, 59, 0.3);
+
     p {
         align-items: center;
         display: flex;
@@ -61,37 +64,61 @@
         }
     }
 }
+
 .product_block {
     margin: 0 auto;
     max-width: 400px;
     background: $default_background_color;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     flex-direction: column;
     overflow: hidden;
-    height: auto;
+}
+
+.ingredients_block > ul {
+    width: 250px;
+    margin-top: 10px;
+}
+
+.ingredients_block__ingredient {
+    display: table;
+    vertical-align: middle;
+}
+
+.ingredients_block__ingredient::before {
+    content: "";
+    display: table-cell;
+    background-image: url(./images/groceries-icon.png);
+    width: 20px;
+    height: 20px;
+    padding-right: 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.main_text_block {
+    font-family: "Arial";
+    margin-bottom: 20px;
 }
 
 @media screen and (max-width: 800px) {
     .product_block {
         max-width: 800px;
-        border: 2px solid $counter_color;
-        border-radius: 7px;
     }
+
     .product_block__image {
         max-width: 550px;
         border-radius: 7px;
+        height: 200px;
     }
+
     .product_block__image_block {
         margin-top: 10px;
         box-sizing: border-box;
         position: relative;
         display: flex;
         justify-content: center;
-        width: 400px;
-    }
-    .product_block__image {
-        width: auto;
     }
 
     .scroller {
@@ -116,11 +143,14 @@
         font-weight: 600;
         font-size: 27px;
         color: #09051c;
+        display: flex;
+        justify-content: center;
     }
 
     .product_block__title_desctop {
         display: none;
     }
+
     .ingredients_block {
         display: flex;
         justify-content: flex-start;
@@ -130,14 +160,8 @@
         max-width: 600px;
     }
 
-    .ingredients_block > ul {
-        width: 230px;
-        list-style-image: url(./images/groceries-icon.png);
-        margin-top: 10px;
-    }
-
-    .ingredients_block__ingredient {
-        padding: 0 0 0 15px;
+    .go_back_icon {
+        left: 20px;
     }
 }
 
@@ -145,7 +169,7 @@
     .product_block {
         @include block_default_layout();
         position: relative;
-        height: 100vh;
+        min-height: 100vh;
     }
 
     .product_block__description_block {
@@ -158,11 +182,11 @@
 
     .product_block__image_block {
         width: 700px;
-        margin: auto;
+        box-sizing: border-box;
+        padding: 0 50px;
         display: flex;
         flex-direction: row-reverse;
         align-items: center;
-        justify-content: center;
         margin-top: 50px;
     }
 
@@ -176,14 +200,10 @@
     }
 
     .product_block__title_desctop {
-        display: block;
-        position: relative;
         font-weight: 600;
-        margin-left: 120px;
+        width: 500px;
         font-size: 27px;
         color: #09051c;
-        width: 500px;
-        height: auto;
     }
 
     .product_block__short_info_block {
@@ -196,16 +216,7 @@
         align-items: center;
         flex-direction: row;
         flex-wrap: wrap;
+        margin-bottom: 30px;
         width: 900px;
-    }
-
-    .ingredients_block > ul {
-        width: 230px;
-        list-style-image: url(./images/groceries-icon.png);
-        margin-top: 10px;
-    }
-
-    .ingredients_block__ingredient {
-        padding: 0 0 0 15px;
     }
 }

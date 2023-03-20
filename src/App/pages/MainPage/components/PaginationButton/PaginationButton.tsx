@@ -12,21 +12,21 @@ const PaginationButton: React.FC<PaginationButtonProps> = ({
   onClickHandler,
   activeValue,
 }) => {
+  const isNumber: boolean = typeof value === "number";
   return (
-    <div
-      className={typeof value === "number" ? styles.button : styles.dots_style}
-      onClick={
-        typeof value === "number" ? () => onClickHandler(value) : () => ""
-      }
+    <button
+      className={isNumber ? styles.button : styles.dots_style}
+      onClick={() => onClickHandler(Number(value))}
+      disabled={!isNumber}
     >
       <div
         className={`${styles.button_text} ${
           activeValue === value ? styles.active : ""
         }`}
       >
-        {typeof value === "number" ? JSON.stringify(value) : "..."}
+        {isNumber ? JSON.stringify(value) : "..."}
       </div>
-    </div>
+    </button>
   );
 };
 export default memo(PaginationButton);
