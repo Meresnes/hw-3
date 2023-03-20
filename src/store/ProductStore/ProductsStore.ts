@@ -55,13 +55,14 @@ export class ProductStore implements ILocalStore {
         try {
           this._meta = Meta.success;
           this._list = normalizeProductList(response.data);
+          console.log(response.data);
         } catch (e) {
           this._meta = Meta.error;
         }
       } else this._meta = Meta.error;
     });
   }
-  destroy(): void {}
+  destroy(): void { }
   private readonly _idReaction: IReactionDisposer = reaction(
     () => this._id,
     () => {

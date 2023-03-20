@@ -33,11 +33,7 @@ const Card: React.FC<CardProps> = ({ data }) => {
           </div>
 
           <div className={styles.card__content_block__calories}>
-            <p>{data.calories} kcal</p>{" "}
-            <div className={styles.add_icon}>
-              <div className={styles.add_icon__vertical_line}></div>
-              <div className={styles.add_icon__horizontal_line}></div>
-            </div>
+            <p>{data.calories} kcal</p>
           </div>
         </div>
       </Link>

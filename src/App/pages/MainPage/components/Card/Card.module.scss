@@ -39,6 +39,7 @@
     display: block;
     margin: 0 auto;
     max-width: 87px;
+    border-radius: 7px;
 }
 
 .card__content_block__title {
@@ -64,34 +65,6 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-}
-
-.add_icon {
-    width: 24px;
-    display: block;
-    height: 24px;
-    background: #ff0000;
-    border-radius: 50%;
-    position: relative;
-}
-
-.add_icon__vertical_line {
-    position: absolute;
-    border-top: 1.5px solid #ffffff;
-    top: 50%;
-    left: 6px;
-    width: 12px;
-    height: 0px;
-    transform: rotate(90deg);
-}
-
-.add_icon__horizontal_line {
-    position: absolute;
-    border-top: 1.5px solid #ffffff;
-    left: 6px;
-    top: 50%;
-    width: 12px;
-    height: 0px;
 }
 
 .card__content_block__title_desktop {
@@ -123,6 +96,7 @@
         display: block;
         @include block_main_font;
         font-size: 18px;
+        line-height: 20px;
         height: 50px;
     }
 
