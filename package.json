@@ -4,11 +4,14 @@
   "main": "index.tsx",
   "repository": "https://github.com/Meresnes/hw-3.git",
   "author": "Meresnes <meresnes@yandex.ru>",
+  "homepage": "https://Meresnes.github.io/hw-3",
   "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=development npx webpack serve --mode=development",
     "start": "cross-env NODE_ENV=production npx webpack serve --mode=production",
     "build": "cross-env NODE_ENV=production npx webpack --mode=production",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d dist",
     "ts-check": "tsc --skipLibCheck --noEmit --project tsconfig.json",
     "lint": "eslint \"./src/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "eslint \"./src/**/*.{js,jsx,ts,tsx}\" --fix"
@@ -35,6 +38,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-webpack-plugin": "^4.0.0",
     "fork-ts-checker-webpack-plugin": "^8.0.0",
+    "gh-pages": "^5.0.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.7.3",
     "postcss-loader": "^7.0.2",
