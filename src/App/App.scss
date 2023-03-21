@@ -11,26 +11,30 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+
 p {
   margin: 0;
   padding: 0;
 }
+
 a {
+  width: 100%;
+  height: 100%;
   text-decoration: none;
   margin: 0;
   padding: 0;
 }
+
 *::-webkit-scrollbar {
   height: 10px;
   width: 3px;
 }
+
 *::-webkit-scrollbar-track {
   background: rgb(255, 0, 0, 0.4);
 }
+
 *::-webkit-scrollbar-thumb {
   border-radius: 7px;
   border: 4px solid rgb(255, 0, 0, 0.8);
-}
-li {
-  margin-top: 10px;
 }

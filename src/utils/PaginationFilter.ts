@@ -5,13 +5,13 @@ export const PaginationFilter = (
 ) => {
   const fullArr = [
     ...Array.from(
-      { length: Math.ceil(totalRes / ricepsOnPage) - 1 },
+      { length: Math.ceil(totalRes / ricepsOnPage) },
       (_, index) => index + 1
     ),
   ];
   let visibleArr: (number | string)[] = [];
   visibleArr = fullArr.filter((page: number | string) => {
-    return page >= curentPage - 3 && page <= curentPage + 3;
+    return page >= curentPage - 2 && page <= curentPage + 2;
   });
 
   if (visibleArr[0] !== fullArr[0]) {
