@@ -124,15 +124,14 @@ export class RecipesStore implements ILocalStore {
   private readonly _qpSearchReaction: IReactionDisposer = reaction(
     () => rootStore.query.getParam("search"),
     () => {
-
       runInAction(() => {
-        const timeout: NodeJS.Timeout = setTimeout(() => {
+        const currentTimeout: NodeJS.Timeout = setTimeout(() => {
           this.getRecipesList();
         }, 1000);
 
         this._timeouts.forEach((timeoutId) => clearTimeout(timeoutId));
         this._timeouts = [];
-        this._timeouts.push(timeout);
+        this._timeouts.push(currentTimeout);
       });
     }
   );
