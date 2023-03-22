@@ -15,7 +15,6 @@ import MultiDropdown, { Option } from "./components/MultiDropdown";
 import PaginationButton from "./components/PaginationButton";
 import SadSmile from "./images/sad_cat.png";
 import SearchIcon from "./images/search-icon.png";
-
 import styles from "./MainPage.module.scss";
 
 const MainPage: React.FC = () => {
@@ -39,7 +38,6 @@ const MainPage: React.FC = () => {
     { key: "fingerfood", value: "Fingerfood" },
     { key: "snack", value: "Snack" },
     { key: "drink", value: "Drink" },
-
   ];
 
   useEffect(() => {
@@ -60,7 +58,6 @@ const MainPage: React.FC = () => {
     )
       recipesStore.getRecipesList();
     else {
-
       setSearchParams({
         search: `${recipesStore.searchValue}`,
         page: `${1}`,
@@ -112,7 +109,11 @@ const MainPage: React.FC = () => {
     <>
       <header>
         <div className={styles.header_block}>
-          <img className={styles.header_block__img} src={SearchIcon} alt="author: Dimitry Miroliubov" />
+          <img
+            className={styles.header_block__img}
+            src={SearchIcon}
+            alt="author: Dimitry Miroliubov"
+          />
           <Input
             value={recipesStore.searchValue}
             placeholder="Search"
@@ -122,11 +123,14 @@ const MainPage: React.FC = () => {
           />
         </div>
         <div className={styles.header_block}>
-
           <div className={styles.header__dropdown_block}>
             <MultiDropdown
               onChange={(value) => changeTypeHandler(value)}
-              value={paramsRecipesTypeValue ? paramsRecipesTypeValue : "Select a category"}
+              value={
+                paramsRecipesTypeValue
+                  ? paramsRecipesTypeValue
+                  : "Select a category"
+              }
               options={TypeValues}
             />
           </div>

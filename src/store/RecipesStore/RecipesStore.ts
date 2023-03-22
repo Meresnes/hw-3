@@ -28,7 +28,7 @@ export class RecipesStore implements ILocalStore {
   private _meta: Meta = Meta.initial;
   private _totalRes: number = 1;
   private _searchValue: string = "";
-  private _timeouts: number[] = [];
+  private _timeouts: NodeJS.Timeout[] = [];
   private _curentPage: number = 1;
   private _offsetValue: number = 0;
   private _recipesType: string = "";
@@ -124,10 +124,12 @@ export class RecipesStore implements ILocalStore {
   private readonly _qpSearchReaction: IReactionDisposer = reaction(
     () => rootStore.query.getParam("search"),
     () => {
+
       runInAction(() => {
-        const timeout: any = setTimeout(() => {
+        const timeout: NodeJS.Timeout = setTimeout(() => {
           this.getRecipesList();
         }, 1000);
+
         this._timeouts.forEach((timeoutId) => clearTimeout(timeoutId));
         this._timeouts = [];
         this._timeouts.push(timeout);

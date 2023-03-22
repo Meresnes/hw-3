@@ -1,6 +1,9 @@
 export const PaginationFilter = (
+  /** Текущая страница*/
   curentPage: number,
+  /** Всего Страниц*/
   totalRes: number,
+  /** Кол-во рецептов на странице*/
   ricepsOnPage: number
 ) => {
   const fullArr = [
@@ -9,8 +12,8 @@ export const PaginationFilter = (
       (_, index) => index + 1
     ),
   ];
-  let visibleArr: (number | string)[] = [];
-  visibleArr = fullArr.filter((page: number | string) => {
+
+  const visibleArr: (number | string)[] = fullArr.filter((page: number | string) => {
     return page >= curentPage - 2 && page <= curentPage + 2;
   });
 
@@ -21,5 +24,6 @@ export const PaginationFilter = (
   if (visibleArr[visibleArr.length - 1] !== fullArr[fullArr.length - 1]) {
     visibleArr.push("...", fullArr.length);
   }
+
   return visibleArr;
 };
