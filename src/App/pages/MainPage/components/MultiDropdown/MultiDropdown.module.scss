@@ -1,0 +1,112 @@
+.container {
+    width: 370px;
+}
+
+.multi_main__item {
+    border: 0;
+    border-radius: 7px;
+    font-family: "Avenir";
+    font-size: 12px;
+    height: 36px;
+    width: 100%;
+    background: linear-gradient(98.81deg, #fff0f0 -0.82%, #ffdfdf 101.53%);
+    text-align: left;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+.multi_dropdown:disabled {
+    background: linear-gradient(98.81deg, #f2f2f2 -0.82%, #d9d9d9 101.53%);
+}
+
+.multi_dropdown:disabled::before {
+    color: #3b3b3b;
+    opacity: 0.5;
+}
+
+.multi_dropdown__body {
+    padding: 0;
+    margin: 4px 0 0 0;
+    overflow-y: scroll;
+    height: 120px;
+    border-radius: 7px;
+    transition: all 0.5s;
+}
+
+.active {
+    background: #ffe5e5 !important;
+}
+
+.multi_dropdown {
+    font-family: "Avenir";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    background: linear-gradient(98.81deg, #fff0f0 -0.82%, #ffdfdf 101.53%);
+    text-align: left;
+}
+
+.multi_dropdown:focus {
+    background: linear-gradient(98.81deg, #fff0f0 -0.82%, #ffdfdf 101.53%);
+}
+
+.container__icon_block {
+    display: flex;
+    align-items: center;
+}
+
+.multi_dropdown__item {
+    cursor: pointer;
+    font-family: "Avenir";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 28px;
+    border-radius: 0;
+    width: 100%;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    box-sizing: border-box;
+}
+
+.multi_dropdown__item:first-child {
+    border-radius: 7px 7px 0 0;
+    margin-top: 3px;
+}
+
+.multi_dropdown__item:last-child {
+    border-radius: 0 0 7px 7px !important;
+}
+
+.multi_dropdown__item {
+    background: #fff7f7;
+}
+
+.hide {
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.dropdown_block__img {
+    margin-right: 10px;
+}
+
+@media screen and (max-width: 390px) {
+    .container {
+        width: 95vw;
+        margin-left: 30px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .dropdown_block__img {
+        display: none;
+    }
+}

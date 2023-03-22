@@ -3,8 +3,26 @@
 header {
     @include block_default_layout();
     display: flex;
-    justify-content: right;
+    justify-content: space-between;
+    flex-direction: row;
     padding: 30px 50px 20px 20px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.header_block {
+    display: flex;
+    align-items: center;
+    align-items: flex-start;
+}
+
+.dropdown_block__img {
+    display: flex;
+    align-items: center;
+}
+
+.header_block__img {
+    margin-right: 10px;
 }
 
 .food_block {
@@ -68,7 +86,7 @@ header {
     margin-bottom: 50px;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 950px) {
     .pagination_buttons {
         width: 450px;
         height: auto;
@@ -77,5 +95,18 @@ header {
         flex-wrap: wrap;
         justify-content: center;
         flex-direction: row;
+    }
+
+    header {
+        @include block_default_layout();
+        flex-direction: column;
+        height: 300px;
+        justify-content: space-around;
+        align-items: center;
+    }
+}
+@media screen and (max-width: 450px) {
+    .header_block__img {
+        display: none;
     }
 }

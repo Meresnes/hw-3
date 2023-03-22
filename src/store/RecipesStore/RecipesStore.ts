@@ -20,7 +20,8 @@ type PrivateFields =
   | "_totalRes"
   | "_searchValue"
   | "_curentPage"
-  | "_recipesOnPageCount";
+  | "_recipesOnPageCount"
+  | "_recipesType";
 
 export class RecipesStore implements ILocalStore {
   private _list: RecipesItemsModel[] = [];
@@ -30,6 +31,7 @@ export class RecipesStore implements ILocalStore {
   private _timeouts: number[] = [];
   private _curentPage: number = 1;
   private _offsetValue: number = 0;
+  private _recipesType: string = "";
   private readonly _recipesOnPageCount: number = 16;
 
   constructor() {
@@ -39,42 +41,54 @@ export class RecipesStore implements ILocalStore {
       _totalRes: observable.ref,
       _searchValue: observable.ref,
       _curentPage: observable,
+      _recipesType: observable,
       _recipesOnPageCount: observable.ref,
       list: computed,
       meta: computed,
       totalRes: computed,
       searchValue: computed,
+      recipesType: computed,
       recipesOnPageCount: computed,
       curentPage: computed,
       setCurentPage: action,
-      getRecipesList: action,
       setSearchValue: action,
+      setRecipesType: action,
+      getRecipesList: action,
     });
   }
+
   get list(): RecipesItemsModel[] {
     return this._list;
   }
   get meta(): Meta {
     return this._meta;
   }
-  get recipesOnPageCount(): number {
-    return this._recipesOnPageCount;
+  get totalRes(): number {
+    return this._totalRes;
   }
   get searchValue(): string {
     return this._searchValue;
   }
-  get totalRes(): number {
-    return this._totalRes;
-  }
   get curentPage(): number {
     return this._curentPage;
   }
+  get recipesType(): string {
+    return this._recipesType;
+  }
+  get recipesOnPageCount(): number {
+    return this._recipesOnPageCount;
+  }
+
   setCurentPage = (value: number) => {
     this._curentPage = value;
   };
   setSearchValue = (value: string) => {
-    this._searchValue = value === "null" ? "" : value;
+    this._searchValue = value;
   };
+  setRecipesType = (value: string) => {
+    this._recipesType = value;
+  };
+
   async getRecipesList() {
     this._meta = Meta.loading;
     this._list = [];
@@ -85,11 +99,9 @@ export class RecipesStore implements ILocalStore {
       method: "GET",
       data: {},
       headers: {},
-      url: `${API_ENDPOINTS.API_DOMAIN}${API_ENDPOINTS.API_GET_RECIPES}${
-        this._searchValue === "null" ? "" : this._searchValue
-      }${API_ENDPOINTS.API_RECIPES_PARAMS}${this._offsetValue}${
-        API_ENDPOINTS.API_PARAMS
-      }${API_ENDPOINTS.API_KEY}`,
+      url: `${API_ENDPOINTS.API_DOMAIN}${API_ENDPOINTS.API_GET_RECIPES}${this._searchValue === "null" ? "" : this._searchValue
+        }${API_ENDPOINTS.API_RECIPES_PARAMS}${this._offsetValue}${API_ENDPOINTS.API_RECIPES_TYPE
+        }${this._recipesType}${API_ENDPOINTS.API_PARAMS}${API_ENDPOINTS.API_KEY}`,
     });
 
     runInAction(() => {

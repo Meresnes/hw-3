@@ -9,36 +9,62 @@ import { useLocalStore } from "@utils/useLocalStore";
 import { observer } from "mobx-react-lite";
 import { useSearchParams } from "react-router-dom";
 
-import Card from "./components/Card/index";
-import Input from "./components/Input/index";
+import Card from "./components/Card";
+import Input from "./components/Input";
+import MultiDropdown, { Option } from "./components/MultiDropdown";
 import PaginationButton from "./components/PaginationButton";
 import SadSmile from "./images/sad_cat.png";
+import SearchIcon from "./images/search-icon.png";
+
 import styles from "./MainPage.module.scss";
 
 const MainPage: React.FC = () => {
   const recipesStore = useLocalStore(() => new RecipesStore());
-
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const searchParamsSearchValue = searchParams.get("search");
-  const searchParamsPageValue = searchParams.get("page");
+  const paramsSearchValue = searchParams.get("search");
+  const paramsPageValue = searchParams.get("page");
+  const paramsRecipesTypeValue = searchParams.get("type");
+
+  const TypeValues = [
+    { key: "", value: "Select a category" },
+    { key: "main course", value: "Main course" },
+    { key: "side dish", value: "Side dish" },
+    { key: "dessert", value: "Dessert" },
+    { key: "appetizer", value: "Appetizer" },
+    { key: "salad", value: "Salad" },
+    { key: "bread", value: "Bread" },
+    { key: "breakfast", value: "Breakfast" },
+    { key: "soup", value: "Soup" },
+    { key: "fingerfood", value: "Fingerfood" },
+    { key: "snack", value: "Snack" },
+    { key: "drink", value: "Drink" },
+
+  ];
 
   useEffect(() => {
     recipesStore.setSearchValue(
-      `${searchParamsSearchValue ? searchParamsSearchValue : ""}`
+      `${paramsSearchValue ? paramsSearchValue : ""}`
     );
-    recipesStore.setCurentPage(
-      searchParamsPageValue ? Number(searchParamsPageValue) : 1
+
+    recipesStore.setRecipesType(
+      `${paramsRecipesTypeValue ? paramsRecipesTypeValue : ""}`
     );
+
+    recipesStore.setCurentPage(paramsPageValue ? Number(paramsPageValue) : 1);
+
     if (
-      searchParamsPageValue === String(recipesStore.curentPage) &&
-      searchParamsSearchValue === recipesStore.searchValue
-    ) {
+      paramsPageValue === String(recipesStore.curentPage) &&
+      paramsSearchValue === recipesStore.searchValue &&
+      paramsRecipesTypeValue === recipesStore.recipesType
+    )
       recipesStore.getRecipesList();
-    } else {
+    else {
+
       setSearchParams({
         search: `${recipesStore.searchValue}`,
         page: `${1}`,
+        type: `${recipesStore.recipesType}`,
       });
     }
   }, [recipesStore]);
@@ -49,8 +75,22 @@ const MainPage: React.FC = () => {
       setSearchParams({
         search: `${recipesStore.searchValue}`,
         page: `${recipesStore.curentPage}`,
+        type: `${recipesStore.recipesType}`,
       });
       window.scrollTo({ top: 0, behavior: "smooth" });
+    },
+    [recipesStore, setSearchParams]
+  );
+
+  const changeTypeHandler = useCallback(
+    (value: Option) => {
+      recipesStore.setCurentPage(1);
+      recipesStore.setRecipesType(value.key);
+      setSearchParams({
+        search: `${recipesStore.searchValue}`,
+        page: `${recipesStore.curentPage}`,
+        type: `${value.key}`,
+      });
     },
     [recipesStore, setSearchParams]
   );
@@ -62,6 +102,7 @@ const MainPage: React.FC = () => {
       setSearchParams({
         search: `${value}`,
         page: `${recipesStore.curentPage}`,
+        type: `${recipesStore.recipesType}`,
       });
     },
     [recipesStore, setSearchParams]
@@ -70,13 +111,26 @@ const MainPage: React.FC = () => {
   return (
     <>
       <header>
-        <Input
-          value={recipesStore.searchValue}
-          placeholder="Search"
-          onChange={(value: string) => {
-            changeInputHandler(value);
-          }}
-        />
+        <div className={styles.header_block}>
+          <img className={styles.header_block__img} src={SearchIcon} alt="author: Dimitry Miroliubov" />
+          <Input
+            value={recipesStore.searchValue}
+            placeholder="Search"
+            onChange={(value: string) => {
+              changeInputHandler(value);
+            }}
+          />
+        </div>
+        <div className={styles.header_block}>
+
+          <div className={styles.header__dropdown_block}>
+            <MultiDropdown
+              onChange={(value) => changeTypeHandler(value)}
+              value={paramsRecipesTypeValue ? paramsRecipesTypeValue : "Select a category"}
+              options={TypeValues}
+            />
+          </div>
+        </div>
       </header>
       <div className={styles.main_title}>Recipes</div>
       <div className={styles.food_block}>
