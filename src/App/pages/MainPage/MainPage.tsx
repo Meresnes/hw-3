@@ -10,8 +10,8 @@ import { observer } from "mobx-react-lite";
 import { useSearchParams } from "react-router-dom";
 
 import Card from "./components/Card";
+import Dropdown, { Option } from "./components/Dropdown";
 import Input from "./components/Input";
-import MultiDropdown, { Option } from "./components/MultiDropdown";
 import PaginationButton from "./components/PaginationButton";
 import SadSmile from "./images/sad_cat.png";
 import SearchIcon from "./images/search-icon.png";
@@ -106,7 +106,7 @@ const MainPage: React.FC = () => {
   );
 
   return (
-    <>
+    <div className={styles.main_container}>
       <header>
         <div className={styles.header_block}>
           <img
@@ -124,7 +124,7 @@ const MainPage: React.FC = () => {
         </div>
         <div className={styles.header_block}>
           <div className={styles.header__dropdown_block}>
-            <MultiDropdown
+            <Dropdown
               onChange={(value) => changeTypeHandler(value)}
               value={
                 paramsRecipesTypeValue
@@ -177,7 +177,7 @@ const MainPage: React.FC = () => {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 export default observer(MainPage);

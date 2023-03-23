@@ -6,6 +6,10 @@ body {
   background: $default_body_backbround;
   scrollbar-width: thin;
   font-family: "Avenir", sans-serif;
+  background-image: url("../images/background.jpg");
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
 }
 
 code {

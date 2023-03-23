@@ -1,34 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-import styles from "./MultiDropdown.module.scss";
+import styles from "./Dropdown.module.scss";
 import OptionsIcon from "../../images/options-icon.png";
 export interface Option {
   value: string;
   key: string;
 }
 
-type MultiDropdownProps = {
+type DropdownProps = {
   options: Option[];
   value: string;
   onChange: (value: Option) => void;
 };
 
-const MultiDropdown: React.FC<MultiDropdownProps> = ({
-  options,
-  onChange,
-  value,
-}) => {
+const Dropdown: React.FC<DropdownProps> = ({ options, onChange, value }) => {
   const [selectedOptions, setSelectedOptions] = useState<string>(value);
   const [open, setOpen] = useState<boolean>(false);
+  const dropdownBodyRef = useRef<HTMLDivElement>(null);
 
   const handleClick = (option: Option) => {
     setSelectedOptions(option.value);
     onChange(option);
+
     setOpen(false);
   };
 
+  const handleOutsideClick = (event: MouseEvent) => {
+    if (
+      dropdownBodyRef.current &&
+      !dropdownBodyRef.current.contains(event.target as Node)
+    ) {
+      setOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container} ref={dropdownBodyRef}>
       <div className={styles.container__icon_block}>
         <img
           className={styles.dropdown_block__img}
@@ -47,8 +61,9 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
       >
         {options.map((option: Option) => (
           <li
-            className={`${styles.multi_dropdown__item} ${option.value === selectedOptions ? styles.active : ""
-              }`}
+            className={`${styles.multi_dropdown__item} ${
+              option.value === selectedOptions ? styles.active : ""
+            }`}
             key={option.value}
             onClick={() => handleClick(option)}
           >
@@ -59,4 +74,4 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
     </div>
   );
 };
-export default MultiDropdown;
+export default Dropdown;

@@ -1,5 +1,7 @@
 .container {
     width: 370px;
+    position: relative;
+    height: auto;
 }
 
 .multi_main__item {
@@ -28,7 +30,10 @@
 }
 
 .multi_dropdown__body {
+    z-index: 9;
+    position: absolute;
     padding: 0;
+    width: 100%;
     margin: 4px 0 0 0;
     overflow-y: scroll;
     height: 120px;
@@ -73,6 +78,7 @@
     align-items: center;
     padding-left: 10px;
     box-sizing: border-box;
+    background: #fff7f7;
 }
 
 .multi_dropdown__item:first-child {
@@ -82,10 +88,6 @@
 
 .multi_dropdown__item:last-child {
     border-radius: 0 0 7px 7px !important;
-}
-
-.multi_dropdown__item {
-    background: #fff7f7;
 }
 
 .hide {

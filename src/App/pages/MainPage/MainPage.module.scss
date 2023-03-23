@@ -1,5 +1,9 @@
 @import "@styles/variables.scss";
 
+.main_container {
+    box-shadow: 10px 5px 5px $counter_color;
+}
+
 header {
     @include block_default_layout();
     display: flex;
@@ -8,6 +12,7 @@ header {
     padding: 30px 50px 20px 20px;
     margin: 0 auto;
     box-sizing: border-box;
+    height: 100px;
 }
 
 .header_block {
@@ -100,7 +105,7 @@ header {
     header {
         @include block_default_layout();
         flex-direction: column;
-        height: 300px;
+        height: 150px;
         justify-content: space-around;
         align-items: center;
     }
