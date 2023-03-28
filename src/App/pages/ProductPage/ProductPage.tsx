@@ -62,7 +62,7 @@ const ProductPage: React.FC = () => {
             <div className={styles.product_block__main_info}>
               <p className={styles.product_block__small_title}>Ingredients:</p>
               <div className={styles.ingredients_block}>
-                {productStore.list.ingredients?.map(
+                {/* {productStore.list.ingredients?.map(
                   (el: any, index: number) => (
                     <ul>
                       <li
@@ -70,8 +70,21 @@ const ProductPage: React.FC = () => {
                         key={index}
                       >
                         {el.name}
+                        
                       </li>
                     </ul>
+                  )
+                )} */}
+                {productStore.list.ingredients?.map(
+                  (el: any, index: number) => (
+                    <div key={index} className={styles.ingredients_block__item}>
+                      <img
+                        className={styles.ingredients_block__img}
+                        src={`https://spoonacular.com/cdn/ingredients_100x100/${el.image}`}
+                        alt={el.name}
+                      />
+                      <p>{el.name}</p>
+                    </div>
                   )
                 )}
               </div>

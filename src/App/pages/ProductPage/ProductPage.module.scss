@@ -67,6 +67,7 @@
 
 .product_block {
     margin: 0 auto;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
     max-width: 400px;
     background: $default_background_color;
     display: flex;
@@ -76,26 +77,67 @@
     overflow: hidden;
 }
 
-.ingredients_block > ul {
-    width: 250px;
-    margin-top: 10px;
+// .ingredients_block > ul {
+//     width: 250px;
+//     margin-top: 10px;
+// }
+
+// .ingredients_block__ingredient {
+//     display: table;
+//     vertical-align: middle;
+// }
+.ingredients_block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
 }
 
-.ingredients_block__ingredient {
-    display: table;
-    vertical-align: middle;
+.ingredients_block__item {
+    margin: 15px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    border: 2px solid $counter_color;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    border-radius: 7px;
+    padding: 20px;
+    transition: all 0.3s;
+
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.05);
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 15px;
+        transition: all 0.3s;
+    }
 }
 
-.ingredients_block__ingredient::before {
-    content: "";
-    display: table-cell;
-    background-image: url(./images/groceries-icon.png);
-    width: 20px;
-    height: 20px;
-    padding-right: 30px;
-    background-repeat: no-repeat;
-    background-position: center;
+.ingredients_block__img {
+    max-width: 100px;
+    max-height: 100px;
 }
+
+.ingredients_block__item > p {
+    font-size: 18px;
+    text-align: center;
+    margin-top: 15px;
+    font-family: "Arial";
+}
+
+// .ingredients_block__ingredient::before {
+//     content: "";
+//     display: table-cell;
+//     background-image: url(./images/groceries-icon.png);
+//     width: 20px;
+//     height: 20px;
+//     padding-right: 30px;
+//     background-repeat: no-repeat;
+//     background-position: center;
+// }
 
 .main_text_block {
     font-family: "Arial";
@@ -152,9 +194,6 @@
     }
 
     .ingredients_block {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
         flex-direction: row;
         flex-wrap: wrap;
         max-width: 600px;
