@@ -28,7 +28,7 @@ export class RecipesStore implements ILocalStore {
   private _meta: Meta = Meta.initial;
   private _totalRes: number = 1;
   private _searchValue: string = "";
-  private _timeouts: NodeJS.Timeout[] = [];
+  private _timeouts: NodeJS.Timeout | undefined;
   private _curentPage: number = 1;
   private _offsetValue: number = 0;
   private _recipesType: string = "";
@@ -95,29 +95,31 @@ export class RecipesStore implements ILocalStore {
 
     this._offsetValue = (this._curentPage - 1) * this._recipesOnPageCount;
 
-    const response: AxiosResponse = await axios({
-      method: "GET",
-      data: {},
-      headers: {},
-      url: `${API_ENDPOINTS.API_DOMAIN}${API_ENDPOINTS.API_GET_RECIPES}${
-        this._searchValue === "null" ? "" : this._searchValue
-      }${API_ENDPOINTS.API_RECIPES_PARAMS}${this._offsetValue}${
-        API_ENDPOINTS.API_RECIPES_TYPE
-      }${this._recipesType}${API_ENDPOINTS.API_PARAMS}${API_ENDPOINTS.API_KEY}`,
-    });
+    try {
+      const response: AxiosResponse = await axios({
+        method: "GET",
+        data: {},
+        headers: {},
+        url: `${API_ENDPOINTS.API_DOMAIN}${API_ENDPOINTS.API_GET_RECIPES}${
+          this._searchValue === "null" ? "" : this._searchValue
+        }${API_ENDPOINTS.API_RECIPES_PARAMS}${this._offsetValue}${
+          API_ENDPOINTS.API_RECIPES_TYPE
+        }${this._recipesType}${API_ENDPOINTS.API_PARAMS}${
+          API_ENDPOINTS.API_KEY
+        }`,
+      });
 
-    runInAction(() => {
-      if (response.status === 200) {
-        try {
+      runInAction(() => {
+        if (response.status === 200) {
           this._meta = Meta.success;
           this._list = response.data.results.map(normalizeRecipesList);
           this._totalRes = response.data.totalResults;
-        } catch (e) {
-          this._meta = Meta.error;
-          this._list = [];
-        }
-      } else this._meta = Meta.error;
-    });
+        } else this._meta = Meta.error;
+      });
+    } catch (e) {
+      this._meta = Meta.error;
+      this._list = [];
+    }
   }
 
   destroy(): void {
@@ -131,9 +133,8 @@ export class RecipesStore implements ILocalStore {
           this.getRecipesList();
         }, 1000);
 
-        this._timeouts.forEach((timeoutId) => clearTimeout(timeoutId));
-        this._timeouts = [];
-        this._timeouts.push(currentTimeout);
+        clearTimeout(this._timeouts);
+        this._timeouts = currentTimeout;
       });
     }
   );

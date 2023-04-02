@@ -22,11 +22,12 @@ const ProductPage: React.FC = () => {
 
   return (
     <>
-      {productStore.meta === Meta.loading ? (
+      {productStore.meta === Meta.loading && (
         <div className={styles.loader_block}>
           <Loader size={LoaderSize.l} />
         </div>
-      ) : (
+      )}
+      {productStore.meta === Meta.success && (
         <div className={styles.product_block}>
           <div className={styles.product_block__image_block}>
             <img
@@ -62,19 +63,6 @@ const ProductPage: React.FC = () => {
             <div className={styles.product_block__main_info}>
               <p className={styles.product_block__small_title}>Ingredients:</p>
               <div className={styles.ingredients_block}>
-                {/* {productStore.list.ingredients?.map(
-                  (el: any, index: number) => (
-                    <ul>
-                      <li
-                        className={styles.ingredients_block__ingredient}
-                        key={index}
-                      >
-                        {el.name}
-                        
-                      </li>
-                    </ul>
-                  )
-                )} */}
                 {productStore.list.ingredients?.map(
                   (el: any, index: number) => (
                     <div key={index} className={styles.ingredients_block__item}>
@@ -97,6 +85,22 @@ const ProductPage: React.FC = () => {
                 }}
               />
             </div>
+          </div>
+        </div>
+      )}
+      {productStore.meta === Meta.error && (
+        <div className={styles.product_block}>
+          <Link to={"/"}>
+            <div className={styles.go_back_icon}>
+              <div className={styles.go_back_icon__arrow}></div>
+            </div>
+          </Link>
+          <div className={styles.eror_block}>
+            <h2 className={styles.error_title}>
+              Ooops , most likely all the data requests for the token were
+              spent, contact the developer by mail to update the token {"<"}
+              meresnes@yandex.ru{">"}
+            </h2>
           </div>
         </div>
       )}

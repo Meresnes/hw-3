@@ -138,8 +138,8 @@ const MainPage: React.FC = () => {
       </header>
       <div className={styles.main_title}>Recipes</div>
       <div className={styles.food_block}>
-        {recipesStore.meta === Meta.success ? (
-          recipesStore.list.length > 0 ? (
+        {recipesStore.meta === Meta.success &&
+          (recipesStore.list.length > 0 ? (
             recipesStore.list.map((item: RecipesItemsModel) => (
               <Card key={item.id} data={item} />
             ))
@@ -152,29 +152,38 @@ const MainPage: React.FC = () => {
                 alt="SadIcon"
               />
             </div>
-          )
-        ) : (
+          ))}
+        {recipesStore.meta === Meta.loading &&
           [...Array(recipesStore.recipesOnPageCount)].map((item) => (
             <div key={item} className={styles.loader_item}>
               <Loader />
             </div>
-          ))
+          ))}
+        {recipesStore.meta === Meta.error && (
+          <div className={styles.eror_block}>
+            <h2 className={styles.error_title}>
+              Ooops , most likely all the data requests for the token were
+              spent, contact the developer by mail to update the token {"<"}
+              meresnes@yandex.ru{">"}
+            </h2>
+          </div>
         )}
       </div>
       <div className={styles.pagination_block}>
         <div className={styles.pagination_buttons}>
-          {PaginationFilter(
-            recipesStore.curentPage,
-            recipesStore.totalRes,
-            recipesStore.recipesOnPageCount
-          ).map((number, index) => (
-            <PaginationButton
-              key={index}
-              value={number}
-              activeValue={recipesStore.curentPage}
-              onClickHandler={changePageHandler}
-            />
-          ))}
+          {recipesStore.totalRes > recipesStore.recipesOnPageCount &&
+            PaginationFilter(
+              recipesStore.curentPage,
+              recipesStore.totalRes,
+              recipesStore.recipesOnPageCount
+            ).map((number, index) => (
+              <PaginationButton
+                key={index}
+                value={number}
+                activeValue={recipesStore.curentPage}
+                onClickHandler={changePageHandler}
+              />
+            ))}
         </div>
       </div>
     </div>

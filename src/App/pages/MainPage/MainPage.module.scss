@@ -1,7 +1,8 @@
 @import "@styles/variables.scss";
 
 .main_container {
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    height: 100vh;
+    @include block_default_layout();
 }
 
 header {
@@ -46,6 +47,20 @@ header {
     display: flex;
     justify-content: center;
     color: rgb(255, 0, 0, 0.7);
+}
+
+.eror_block {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.error_title {
+    @include page_title_font();
+    color: rgb(255, 0, 0, 0.6);
+    width: 900px;
+    text-align: center;
+    line-height: 45px;
 }
 
 .loader_item {
@@ -109,9 +124,21 @@ header {
         justify-content: space-around;
         align-items: center;
     }
+
+    .error_title {
+        font-size: 24px;
+        width: auto;
+        padding: 0 40px;
+    }
 }
 @media screen and (max-width: 450px) {
     .header_block__img {
         display: none;
+    }
+
+    .error_title {
+        font-size: 18px;
+        padding: 0;
+        line-height: 30px;
     }
 }

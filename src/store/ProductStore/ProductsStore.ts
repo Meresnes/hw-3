@@ -50,23 +50,23 @@ export class ProductStore implements ILocalStore {
 
   async getProductList() {
     this._meta = Meta.loading;
-    const response: AxiosResponse = await axios({
-      method: "GET",
-      data: {},
-      headers: {},
-      url: `${API_ENDPOINTS.API_DOMAIN}${this._id}${API_ENDPOINTS.API_PRODUCT_PARAMS}${API_ENDPOINTS.API_KEY}`,
-    });
 
-    runInAction(() => {
-      if (response.status === 200) {
-        try {
+    try {
+      const response: AxiosResponse = await axios({
+        method: "GET",
+        data: {},
+        headers: {},
+        url: `${API_ENDPOINTS.API_DOMAIN}${this._id}${API_ENDPOINTS.API_PRODUCT_PARAMS}${API_ENDPOINTS.API_KEY}`,
+      });
+      runInAction(() => {
+        if (response.status === 200) {
           this._meta = Meta.success;
           this._list = normalizeProductList(response.data);
-        } catch (e) {
-          this._meta = Meta.error;
-        }
-      } else this._meta = Meta.error;
-    });
+        } else this._meta = Meta.error;
+      });
+    } catch (e) {
+      this._meta = Meta.error;
+    }
   }
 
   destroy(): void {
