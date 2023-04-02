@@ -43,7 +43,8 @@ module.exports = {
   output: {
     path: buildPath,
     filename: "bundle.js",
-    publicPath: '/',
+    // publicPath: "/hw-3/",
+    publicPath: "/",
   },
 
   plugins: [
